@@ -32,7 +32,7 @@ export function Tabs() {
         label: "Total",
         spacing: 5,
         borderRadius: 5,
-        //borderAlign: "inner",
+        borderAlign: "inner",
         minBarLength: "100px",
         data: dataRptMovimientosAñoMes?.map((item) => item.total),
         backgroundColor: [

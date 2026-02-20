@@ -11,7 +11,7 @@ import { ListaMenuDesplegable } from "../moleculas/ListaMenuDesplegable";
 import { BtnFiltro } from "../moleculas/BtnFiltro";
 import { DataDesplegableMovimientos } from "../../utils/dataEstatica";
 import { useOperaciones } from "../../store/OperacionesStore";
-import { ContentFiltro } from "../atomos/ContentFiltro";
+//import { ContentFiltro } from "../atomos/ContentFiltro";
 import { v } from "../../styles/variables";
 
 export function InformesTemplate() {
@@ -120,7 +120,6 @@ const Container = styled.div`
     //background-color: rgba(229, 67, 26, 0.14);
     display: flex;
     align-items: center;
-
     gap: 20px;
   }
 
