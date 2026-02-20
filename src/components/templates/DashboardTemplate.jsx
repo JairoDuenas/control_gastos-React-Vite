@@ -15,8 +15,16 @@ import { useQuery } from "@tanstack/react-query";
 import { Device } from "../../styles/breakPoins";
 import { v } from "../../styles/variables";
 import { Dona } from "../organismos/graficas/Dona";
+import { useRegistroControls } from "../../hooks/useRegistroControls.jsx";
 
 export function DashboardTemplate() {
+  const [value, setValue] = useState(dayjs(Date.now()));
+  const [formatoFecha, setFormatoFecha] = useState("");
+  const { id_usuario } = useUsuariosStore();
+
+  const { dataRptMovimientosAñoMes, rptMovimientosAñoMes } =
+    useMovimientosStore();
+
   const {
     setTipo,
     colorCategoria,
@@ -27,14 +35,14 @@ export function DashboardTemplate() {
     tipo,
   } = useOperaciones();
 
-  const [state, setState] = useState(false);
-  const [stateTipo, setStateTipo] = useState(false);
-  const [value, setValue] = useState(dayjs(Date.now()));
-  const [formatoFecha, setFormatoFecha] = useState("");
-  const { id_usuario } = useUsuariosStore();
-
-  const { dataRptMovimientosAñoMes, rptMovimientosAñoMes } =
-    useMovimientosStore();
+  const {
+    cerrarDesplegables,
+    state,
+    openUser,
+    openTipo,
+    stateTipo,
+    cambiarTipo,
+  } = useRegistroControls({ setTipo });
 
   // Gráfica de dona con chartjs
   const datagrafica = {
@@ -70,31 +78,6 @@ export function DashboardTemplate() {
       },
     ],
   };
-
-  // Función para cerrar listas deplegables
-  function cerrarDesplegables() {
-    setStateTipo(false);
-    setState(false);
-  }
-
-  // Función para abrir tipo
-  function openTipo() {
-    setStateTipo(!stateTipo);
-    setState(false);
-  }
-
-  // Función para cambiar tipo
-  function cambiarTipo(p) {
-    setTipo(p);
-    setStateTipo(!stateTipo);
-    setState(false);
-  }
-
-  // Función para abrir usuario de manera idependiente
-  function openUser() {
-    setState(!state);
-    setStateTipo(false);
-  }
 
   // Query para reporte de movimientos
   const { isLoading, error } = useQuery({

@@ -8,16 +8,17 @@ import { useState } from "react";
 
 export function TablaCategorias({
   data,
-  SetopenRegistro,
-  setdataSelect,
+  setOpenRegistro,
+  setDataSelect,
   setAccion,
 }) {
-  if (data.length == 0) return;
   const [pagina, setPagina] = useState(1);
   const [porPagina, setPorPagina] = useState(10);
+  const { eliminarCategorias } = useCategoriasStore();
+
+  if (data.length == 0) return;
   const mx = data?.length / porPagina;
   const maximo = mx < 1 ? 1 : mx;
-  const { eliminarCategorias } = useCategoriasStore();
 
   function eliminar(p) {
     Swal.fire({
@@ -39,8 +40,8 @@ export function TablaCategorias({
     });
   }
   function editar(data) {
-    SetopenRegistro(true);
-    setdataSelect(data);
+    setOpenRegistro(true);
+    setDataSelect(data);
     setAccion("Editar");
   }
   return (

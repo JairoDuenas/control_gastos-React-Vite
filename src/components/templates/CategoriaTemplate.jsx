@@ -9,7 +9,6 @@ import { DataDesplegableTipo } from "../../utils/dataEstatica";
 import { ContentFiltro } from "../atomos/ContentFiltro";
 import { BtnFiltro } from "../moleculas/BtnFiltro";
 import { v } from "../../styles/variables";
-import { Device } from "../../styles/breakPoins";
 import { TablaCategorias } from "../../components/organismos/tablas/TablaCategorias";
 import { RegistrarCategorias } from "../organismos/formularios/RegistrarCategorias";
 import { LottieAnimacion } from "../moleculas/LottieAnimacion";
@@ -17,9 +16,9 @@ import vacioverde from "../../assets/vacioverde.json";
 import vaciorojo from "../../assets/vaciorojo.json";
 
 export function CategoriaTemplate({ data }) {
-  const [openRegistro, setopenRegistro] = useState(false);
+  const [openRegistro, setOpenRegistro] = useState(false);
   const [accion, setAccion] = useState("");
-  const [dataSelect, setdataSelect] = useState([]);
+  const [dataSelect, setDataSelect] = useState([]);
   const [state, setState] = useState(false);
   const [stateTipo, setStateTipo] = useState(false);
   const { colorCategoria, tituloBtnDes, bgCategoria, setTipo, tipo } =
@@ -52,9 +51,9 @@ export function CategoriaTemplate({ data }) {
 
   // Función para crear nuevo registro
   function nuevoRegistro() {
-    setopenRegistro(!openRegistro);
+    setOpenRegistro(!openRegistro);
     setAccion("Nuevo");
-    setdataSelect([]);
+    setDataSelect([]);
   }
 
   return (
@@ -62,7 +61,7 @@ export function CategoriaTemplate({ data }) {
       {openRegistro && (
         <RegistrarCategorias
           dataSelect={dataSelect}
-          onClose={() => setopenRegistro(!openRegistro)}
+          onClose={() => setOpenRegistro(!openRegistro)}
           accion={accion}
           //setState={() => setopenRegistro(!openRegistro)}
         />
@@ -115,8 +114,8 @@ export function CategoriaTemplate({ data }) {
 
         <TablaCategorias
           data={data}
-          SetopenRegistro={setopenRegistro}
-          setdataSelect={setdataSelect}
+          setOpenRegistro={setOpenRegistro}
+          setDataSelect={setDataSelect}
           setAccion={setAccion}
         />
       </section>
