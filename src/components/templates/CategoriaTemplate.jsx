@@ -1,6 +1,5 @@
 import styled from "styled-components";
 import { Header } from "../organismos/Header";
-import { useState } from "react";
 import { ContentFiltros } from "../atomos/ContentFiltros";
 import { BtnDesplegable } from "../moleculas/BtnDesplegable";
 import { useOperaciones } from "../../store/OperacionesStore";
@@ -14,47 +13,27 @@ import { RegistrarCategorias } from "../organismos/formularios/RegistrarCategori
 import { LottieAnimacion } from "../moleculas/LottieAnimacion";
 import vacioverde from "../../assets/vacioverde.json";
 import vaciorojo from "../../assets/vaciorojo.json";
+import { useRegistroControls } from "../../hooks/useRegistroControls.jsx";
 
 export function CategoriaTemplate({ data }) {
-  const [openRegistro, setOpenRegistro] = useState(false);
-  const [accion, setAccion] = useState("");
-  const [dataSelect, setDataSelect] = useState([]);
-  const [state, setState] = useState(false);
-  const [stateTipo, setStateTipo] = useState(false);
   const { colorCategoria, tituloBtnDes, bgCategoria, setTipo, tipo } =
     useOperaciones();
 
-  // Función para cambiar tipo
-  function cambiarTipo(p) {
-    setTipo(p);
-    setStateTipo(!stateTipo);
-    setState(false);
-  }
-
-  // Función para cerrar listas deplegables
-  function cerrarDesplegables() {
-    setStateTipo(false);
-    setState(false);
-  }
-
-  // Función para abrir tipo de manera idependiente
-  function openTipo() {
-    setStateTipo(!stateTipo);
-    setState(false);
-  }
-
-  // Función para abrir usuario de manera idependiente
-  function openUser() {
-    setState(!state);
-    setStateTipo(false);
-  }
-
-  // Función para crear nuevo registro
-  function nuevoRegistro() {
-    setOpenRegistro(!openRegistro);
-    setAccion("Nuevo");
-    setDataSelect([]);
-  }
+  const {
+    cerrarDesplegables,
+    state,
+    stateTipo,
+    openUser,
+    openTipo,
+    cambiarTipo,
+    nuevoRegistro,
+    setDataSelect,
+    dataSelect,
+    accion,
+    setAccion,
+    setOpenRegistro,
+    openRegistro,
+  } = useRegistroControls({ setTipo });
 
   return (
     <Container onClick={cerrarDesplegables}>
@@ -63,7 +42,7 @@ export function CategoriaTemplate({ data }) {
           dataSelect={dataSelect}
           onClose={() => setOpenRegistro(!openRegistro)}
           accion={accion}
-          //setState={() => setopenRegistro(!openRegistro)}
+          state={openRegistro}
         />
       )}
 

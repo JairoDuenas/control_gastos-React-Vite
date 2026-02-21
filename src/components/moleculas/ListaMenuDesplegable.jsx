@@ -8,7 +8,7 @@ export function ListaMenuDesplegable({ data, top, funcion }) {
       {data.map((item, index) => {
         return (
           <ItemsDesplegable
-            key={item.tipo}
+            key={`{${item.tipo}-${index}}`}
             item={item}
             funcion={() => funcion(item)}
           />
