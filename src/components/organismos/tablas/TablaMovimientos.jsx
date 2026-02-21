@@ -8,8 +8,8 @@ import { useMovimientosStore } from "../../../store/MovimientosStore";
 
 export function TablaMovimientos({
   data,
-  SetopenRegistro,
-  setdataSelect,
+  setOpenRegistro,
+  setDataSelect,
   setAccion,
 }) {
   const [pagina, setPagina] = useState(1);
@@ -53,8 +53,8 @@ export function TablaMovimientos({
   }
 
   function editar(data) {
-    SetopenRegistro(true);
-    setdataSelect(data);
+    setOpenRegistro(true);
+    setDataSelect(data);
     setAccion("Editar");
   }
   return (

@@ -20,15 +20,11 @@ import { BtnDesplegable } from "../moleculas/BtnDesplegable";
 import { ListaMenuDesplegable } from "../moleculas/ListaMenuDesplegable";
 import { BtnFiltro } from "../moleculas/BtnFiltro";
 import { RegistrarMovimientos } from "../organismos/formularios/RegistrarMovimientos";
+import { useRegistroControls } from "../../hooks/useRegistroControls.jsx";
 
 export function MovimientosTemplate() {
-  const [dataSelect, setdataSelect] = useState([]);
-  const [accion, setAccion] = useState("");
-  const [openRegistro, setopenRegistro] = useState(false);
   const [value, setValue] = useState(dayjs(Date.now()));
-  const [state, setState] = useState(false);
   const [formatoFecha, setFormatoFecha] = useState("");
-  const [stateTipo, setStateTipo] = useState(false);
   const {
     tipo,
     setTipo,
@@ -50,37 +46,21 @@ export function MovimientosTemplate() {
 
   const { mostrarCuentas } = useCuentaStore();
 
-  // Función para cerrar listas deplegables
-  function cerrarDesplegables() {
-    setStateTipo(false);
-    setState(false);
-  }
-
-  // Función para abrir tipo
-  function openTipo() {
-    setStateTipo(!stateTipo);
-    setState(false);
-  }
-
-  // Función para cambiar tipo
-  function cambiarTipo(p) {
-    setTipo(p);
-    setStateTipo(!stateTipo);
-    setState(false);
-  }
-
-  // Función para crear nuevo registro
-  function nuevoRegistro() {
-    setopenRegistro(!openRegistro);
-    setAccion("Nuevo");
-    setdataSelect([]);
-  }
-
-  // Función para abrir usuario de manera idependiente
-  function openUser() {
-    setState(!state);
-    setStateTipo(false);
-  }
+  const {
+    cerrarDesplegables,
+    state,
+    stateTipo,
+    openUser,
+    openTipo,
+    cambiarTipo,
+    nuevoRegistro,
+    setDataSelect,
+    dataSelect,
+    accion,
+    setAccion,
+    setOpenRegistro,
+    openRegistro,
+  } = useRegistroControls({ setTipo });
 
   // Query para mostrar movimientos de mes y año
   const { isLoading: loadingMovimientos, error: errorMovimientos } = useQuery({
@@ -136,7 +116,7 @@ export function MovimientosTemplate() {
           dataSelect={dataSelect}
           state={openRegistro}
           accion={accion}
-          setState={() => setopenRegistro(!openRegistro)}
+          setState={() => setOpenRegistro(!openRegistro)}
         />
       )}
       <header className="header">
@@ -205,8 +185,8 @@ export function MovimientosTemplate() {
       <section className="main">
         <TablaMovimientos
           data={datamovimientos}
-          SetopenRegistro={setopenRegistro}
-          setdataSelect={setdataSelect}
+          setOpenRegistro={setOpenRegistro}
+          setDataSelect={setDataSelect}
           setAccion={setAccion}
         />
       </section>
