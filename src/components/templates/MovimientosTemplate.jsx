@@ -6,7 +6,7 @@ import dayjs from "dayjs";
 import { CardTotales } from "../organismos/CardTotales";
 import { useOperaciones } from "../../store/OperacionesStore";
 import { v } from "../../styles/variables";
-import { useQuery } from "@tanstack/react-query";
+//import { useQuery } from "@tanstack/react-query";
 import { useMovimientosStore } from "../../store/MovimientosStore";
 import { useUsuariosStore } from "../../store/UsuariosStore";
 import { Device } from "../../styles/breakPoins";
@@ -21,10 +21,14 @@ import { ListaMenuDesplegable } from "../moleculas/ListaMenuDesplegable";
 import { BtnFiltro } from "../moleculas/BtnFiltro";
 import { RegistrarMovimientos } from "../organismos/formularios/RegistrarMovimientos";
 import { useRegistroControls } from "../../hooks/useRegistroControls.jsx";
+import { useMovimientosQueries } from "../../hooks/useMovimientosQueries.jsx";
 
 export function MovimientosTemplate() {
+  // States
   const [value, setValue] = useState(dayjs(Date.now()));
   const [formatoFecha, setFormatoFecha] = useState("");
+
+  // Stores
   const {
     tipo,
     setTipo,
@@ -43,9 +47,9 @@ export function MovimientosTemplate() {
     mostrarMovimientos,
     datamovimientos,
   } = useMovimientosStore();
-
   const { mostrarCuentas } = useCuentaStore();
 
+  // Custom hook useRegistroControls
   const {
     cerrarDesplegables,
     state,
@@ -62,52 +66,21 @@ export function MovimientosTemplate() {
     openRegistro,
   } = useRegistroControls({ setTipo });
 
-  // Query para mostrar movimientos de mes y año
-  const { isLoading: loadingMovimientos, error: errorMovimientos } = useQuery({
-    queryKey: [
-      "mostrar movimientos mes año",
-      {
-        año: año,
-        mes: mes,
-        id_usuario: id_usuario,
-        tipocategoria: tipo,
-      },
-    ],
-    queryFn: () =>
-      mostrarMovimientos({
-        año: año,
-        mes: mes,
-        id_usuario: id_usuario,
-        tipocategoria: tipo,
-      }),
-    enabled: !!id_usuario,
-  });
+  // Custom hook usemovimientosQueries
+  const { movimientosQuery, cuentasQuery, categoriasQuery } =
+    useMovimientosQueries({
+      año,
+      mes,
+      id_usuario,
+      tipo,
+      mostrarMovimientos,
+      mostrarCuentas,
+      mostrarCategorias,
+    });
 
-  // Query para mostrar cuentas
-  const { isLoading: loadingCuentas, error: errorCuentas } = useQuery({
-    queryKey: [
-      "mostrar cuentas",
-      {
-        id_usuario: id_usuario,
-      },
-    ],
-    queryFn: () =>
-      mostrarCuentas({
-        id_usuario: id_usuario,
-      }),
-    enabled: !!id_usuario,
-  });
-
-  // Query para mostrar categorias
-  const { lisLoading: loadingCategorias, error: errorCategorias } = useQuery({
-    queryKey: ["mostrar categorias", { id_usuario: id_usuario, tipo: tipo }],
-    queryFn: () =>
-      mostrarCategorias({
-        id_usuario: id_usuario,
-        tipo: tipo,
-      }),
-    enabled: !!id_usuario,
-  });
+  const { isLoading: loadingMovimientos } = movimientosQuery;
+  const { isLoading: loadingCuentas } = cuentasQuery;
+  const { isLoading: loadingCategorias } = categoriasQuery;
 
   return (
     <Container onClick={cerrarDesplegables}>
