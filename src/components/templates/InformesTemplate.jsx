@@ -8,47 +8,31 @@ import { Tabs } from "../organismos/Tabs";
 import { ContentFiltros } from "../atomos/ContentFiltros";
 import { BtnDesplegable } from "../moleculas/BtnDesplegable";
 import { ListaMenuDesplegable } from "../moleculas/ListaMenuDesplegable";
-import { BtnFiltro } from "../moleculas/BtnFiltro";
 import { DataDesplegableMovimientos } from "../../utils/dataEstatica";
 import { useOperaciones } from "../../store/OperacionesStore";
-//import { ContentFiltro } from "../atomos/ContentFiltro";
 import { v } from "../../styles/variables";
+import { useRegistroControls } from "../../hooks/useRegistroControls.jsx";
 
 export function InformesTemplate() {
-  const {
-    // tipo,
-    setTipo,
-    colorCategoria,
-    //año,
-    //mes,
-    bgCategoria,
-    tituloBtnDesMovimientos,
-  } = useOperaciones();
+  const { setTipo, colorCategoria, bgCategoria, tituloBtnDesMovimientos } =
+    useOperaciones();
 
-  const [state, setState] = useState(false);
   const [value, setValue] = useState(dayjs(Date.now()));
   const [formatoFecha, setFormatoFecha] = useState("");
-  const [stateTipo, setStateTipo] = useState(false);
 
-  // Función para abrir tipo
-  function openTipo() {
-    setStateTipo(!stateTipo);
-    setState(false);
-  }
-
-  // Función para cambiar tipo
-  function cambiarTipo(p) {
-    setTipo(p);
-    setStateTipo(!stateTipo);
-    setState(false);
-  }
+  const {
+    cerrarDesplegables,
+    state,
+    stateTipo,
+    openTipo,
+    cambiarTipo,
+    openUser,
+  } = useRegistroControls({ setTipo });
 
   return (
-    <Container>
+    <Container onClick={cerrarDesplegables}>
       <header className="header">
-        <Header
-          stateConfig={{ state: state, setState: () => setState(!state) }}
-        />
+        <Header stateConfig={{ state: state, setState: openUser }} />
       </header>
       <section className="informes">
         <ContentFiltros>
