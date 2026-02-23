@@ -20,8 +20,9 @@ import { BtnDesplegable } from "../moleculas/BtnDesplegable";
 import { ListaMenuDesplegable } from "../moleculas/ListaMenuDesplegable";
 import { BtnFiltro } from "../moleculas/BtnFiltro";
 import { RegistrarMovimientos } from "../organismos/formularios/RegistrarMovimientos";
-import { useRegistroControls } from "../../hooks/useRegistroControls.jsx";
-import { useMovimientosQueries } from "../../hooks/useMovimientosQueries.jsx";
+import { useRegistroControls } from "../../hooks/useRegistroControls.jsx.jsx";
+import { useMovimientosQueries } from "../../queries/useMovimientosQueries.jsx";
+import { SpinnerLoader } from "../moleculas/Spinner.jsx";
 
 export function MovimientosTemplate() {
   // States
@@ -78,13 +79,16 @@ export function MovimientosTemplate() {
       mostrarCategorias,
     });
 
-  const { isLoading: loadingMovimientos } = movimientosQuery;
-  const { isLoading: loadingCuentas } = cuentasQuery;
-  const { isLoading: loadingCategorias } = categoriasQuery;
+  const isLoading =
+    movimientosQuery.isLoading ||
+    cuentasQuery.isLoading ||
+    categoriasQuery.isLoading;
+
+  //if (isLoading) return <SpinnerLoader />;
 
   return (
     <Container onClick={cerrarDesplegables}>
-      {openRegistro && (
+      {openRegistro && isLoading && (
         <RegistrarMovimientos
           dataSelect={dataSelect}
           state={openRegistro}

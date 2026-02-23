@@ -10,20 +10,20 @@ import { CalendarioLineal } from "../organismos/CalendarioLineal";
 import dayjs from "dayjs";
 import { useMovimientosStore } from "../../store/MovimientosStore";
 import { useUsuariosStore } from "../../store/UsuariosStore";
-import { useQuery } from "@tanstack/react-query";
-
 import { Device } from "../../styles/breakPoins";
 import { v } from "../../styles/variables";
 import { Dona } from "../organismos/graficas/Dona";
-import { useRegistroControls } from "../../hooks/useRegistroControls.jsx";
+import { useRegistroControls } from "../../hooks/useRegistroControls.jsx.jsx";
+import { useDashboardQuery } from "../../queries/useDashboardQuery.jsx";
+import { useDashboardGrafica } from "../../hooks/useDashboardGrafica.jsx";
+import { SpinnerLoader } from "../moleculas/Spinner.jsx";
 
 export function DashboardTemplate() {
   const [value, setValue] = useState(dayjs(Date.now()));
   const [formatoFecha, setFormatoFecha] = useState("");
   const { id_usuario } = useUsuariosStore();
 
-  const { dataRptMovimientosAñoMes, rptMovimientosAñoMes } =
-    useMovimientosStore();
+  const { dataRptMovimientosAñoMes } = useMovimientosStore();
 
   const {
     setTipo,
@@ -44,53 +44,16 @@ export function DashboardTemplate() {
     cambiarTipo,
   } = useRegistroControls({ setTipo });
 
-  // Gráfica de dona con chartjs
-  const datagrafica = {
-    type: "line",
-    labels: dataRptMovimientosAñoMes?.map((item) => item.descripcion),
-    datasets: [
-      {
-        tension: 0.3,
-        filler: true,
-        label: "Total",
-        spacing: 5,
-        borderRadius: 5,
-        borderAlign: "inner",
-        minBarLength: "100px",
-        data: dataRptMovimientosAñoMes?.map((item) => item.total),
-        backgroundColor: [
-          "rgba(255, 99, 132, 0.2)",
-          "rgba(54, 162, 235, 0.2)",
-          "rgba(255, 206, 86, 0.2)",
-          "rgba(75, 192, 192, 0.2)",
-          "rgba(153, 102, 255, 0.2)",
-          "rgba(255, 159, 64, 0.2)",
-        ],
-        borderColor: [
-          "rgba(255, 99, 132, 1)",
-          "rgba(54, 162, 235, 1)",
-          "rgba(255, 206, 86, 1)",
-          "rgba(75, 192, 192, 1)",
-          "rgba(153, 102, 255, 1)",
-          "rgba(255, 159, 64, 1)",
-        ],
-        borderWidth: 2,
-      },
-    ],
-  };
-
-  // Query para reporte de movimientos
-  const { isLoading, error } = useQuery({
-    queryKey: ["reporte movimientos", año, mes, tipo, id_usuario],
-    queryFn: () =>
-      rptMovimientosAñoMes({
-        año: año,
-        mes: mes,
-        tipocategoria: tipo,
-        id_usuario: id_usuario,
-      }),
-    enabled: !!id_usuario,
+  // Query
+  const { isLoading } = useDashboardQuery({
+    año,
+    mes,
+    tipo,
+    id_usuario,
   });
+
+  // Gráfica con chartjs
+  const { datagrafica } = useDashboardGrafica();
 
   return (
     <Container onClick={cerrarDesplegables}>
@@ -132,11 +95,17 @@ export function DashboardTemplate() {
         />
       </section>
       <section className="card">
-        <Dona
-          datagrafica={datagrafica}
-          data={dataRptMovimientosAñoMes}
-          titulo={tituloBtnDesMovimientos}
-        />
+        {isLoading ? (
+          <SpinnerWrapper>
+            <SpinnerLoader />
+          </SpinnerWrapper>
+        ) : (
+          <Dona
+            datagrafica={datagrafica}
+            data={dataRptMovimientosAñoMes}
+            titulo={tituloBtnDesMovimientos}
+          />
+        )}
       </section>
     </Container>
   );
@@ -193,4 +162,11 @@ const Container = styled.div`
     margin-top: 20px;
     box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
   }
+`;
+
+const SpinnerWrapper = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 300px; /* o lo que mida tu card */
 `;

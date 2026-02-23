@@ -32,7 +32,7 @@ export function useMovimientosQueries({
     enabled: !!id_usuario,
   });
 
-  // 🔹 Categorías
+  // Categorías
   const categoriasQuery = useQuery({
     queryKey: ["categorias", id_usuario, tipo],
     queryFn: () =>

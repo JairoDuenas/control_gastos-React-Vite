@@ -11,7 +11,7 @@ import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { useLocation } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { useUsuariosStore } from "./store/UsuariosStore";
-import { SpinnerLoader } from "./components/atomos/Spinner";
+import { SpinnerLoader } from "./components/moleculas/Spinner";
 import { Login } from "./pages/Login";
 
 function App() {
@@ -36,7 +36,7 @@ function App() {
     return (
       <ThemeProvider theme={themeStyle}>
         <GlobalStyles />
-        <SpinnerLoader mensaje="Preparando configuración" />
+        <SpinnerLoader fullScreen />
       </ThemeProvider>
     );
   }

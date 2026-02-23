@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import styled from "styled-components";
 import { v } from "../../../styles/variables";
 import { InputText } from "./InputText";
-import { SpinnerLoader } from "../../atomos/Spinner";
+import { SpinnerLoader } from "../../moleculas/Spinner";
 import { useOperaciones } from "../../../store/OperacionesStore";
 import { BtnSave } from "../../moleculas/BtnSave";
 import { useCategoriasStore } from "../../../store/CategoriasStore";

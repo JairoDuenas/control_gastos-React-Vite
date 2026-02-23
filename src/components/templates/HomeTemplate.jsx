@@ -50,14 +50,6 @@ export function HomeTemplate() {
         </ButtonContainer>
       </Container>
     </Main>
-    /*
-    <Container>
-      <h1>Bienvenido a Home {user.full_name} </h1>
-      <img src={user.picture} />
-      <h2>{user.email}</h2>
-      <button onClick={cerrarSesion}>Cerrar</button>
-    </Container>
-    */
   );
 }
 
@@ -70,8 +62,6 @@ const Main = styled.div`
   align-items: center;
   position: relative;
   overflow: hidden;
-  //color: ${({ theme }) => theme.text};
-  //height: 100vh;
 `;
 
 const Container = styled.div`
@@ -82,7 +72,6 @@ const Container = styled.div`
   justify-content: center;
   align-items: center;
   color: ${({ theme }) => theme.text};
-  //height: 100vh;
 `;
 
 const Box = styled.div`
