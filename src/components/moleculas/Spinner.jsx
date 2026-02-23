@@ -20,7 +20,6 @@ const Container = styled.div`
   justify-content: center;
   align-items: center;
   gap: 20px;
-
   ${({ $fullScreen }) =>
     $fullScreen
       ? css`
@@ -57,7 +56,7 @@ const spin = keyframes`
 `;
 
 const Spinner = styled.div`
-  border: 4px solid rgba(0, 0, 0, 0.1);
+  border: 10px solid rgba(0, 0, 0, 0.1);
   width: ${({ $size }) => $size}px;
   height: ${({ $size }) => $size}px;
   border-radius: 50%;

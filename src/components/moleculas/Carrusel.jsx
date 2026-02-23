@@ -5,31 +5,32 @@ import {
   Pagination,
   Scrollbar,
   A11y,
-  EffectCards,
+  //EffectCards,
   Autoplay,
 } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
-import img1 from "../../assets/Ruleta/ruleta1.jpeg";
+import img1 from "../../assets/Ruleta/ruleta1.png";
 import img2 from "../../assets/Ruleta/ruleta2.png";
 import img3 from "../../assets/Ruleta/ruleta3.png";
 import img4 from "../../assets/Ruleta/ruleta4.png";
 import img5 from "../../assets/Ruleta/ruleta5.png";
 import img6 from "../../assets/Ruleta/ruleta6.png";
+import img7 from "../../assets/Ruleta/ruleta6.png";
+
 import "swiper/css/effect-cards";
-import Arrow from "../../assets/arrow.png";
 
 export function Carrusel() {
   return (
     <Container>
       <Swiper
         // install Swiper modules
-        autoplay={{ delay: 2000, disableOnInteraction: false }}
+        autoplay={{ delay: 2500, disableOnInteraction: false }}
         modules={[
           Navigation,
           Pagination,
           Scrollbar,
           A11y,
-          EffectCards,
+          //EffectCards,
           Autoplay,
         ]}
         navigation
@@ -54,6 +55,9 @@ export function Carrusel() {
         </SwiperSlide>
         <SwiperSlide>
           <img src={img6} alt="" />
+        </SwiperSlide>
+        <SwiperSlide>
+          <img src={img7} alt="" />
         </SwiperSlide>
       </Swiper>
     </Container>
@@ -89,7 +93,6 @@ const Container = styled.div`
   }
 
   .swiper-slide {
-    border-radius: 20px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -102,16 +105,13 @@ const Container = styled.div`
   }
 
   .swiper-button-next {
-    color: ${({ theme }) => theme.text};
+    color: ${({ theme }) => theme.colorSubtitle};
     right: 0;
     width: 4rem;
     top: 60%;
-    //background-image: url(${Arrow});
     background-position: center;
     background-size: cover;
-    //&:after {
-    //display: none;
-    //}
+
     @media (max-width: 64em) {
       width: 3rem;
     }
@@ -121,15 +121,12 @@ const Container = styled.div`
   }
 
   .swiper-button-prev {
-    color: ${({ theme }) => theme.text};
+    color: ${({ theme }) => theme.colorSubtitle};
     right: 0;
     width: 4rem;
     top: 60%;
-    //background-image: url(${Arrow});
     background-position: center;
     background-size: cover;
-    //transform: rotate(180deg);
-    //display: none;
 
     @media (max-width: 64em) {
       width: 3rem;

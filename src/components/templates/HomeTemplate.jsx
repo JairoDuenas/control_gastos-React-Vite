@@ -13,41 +13,55 @@ import "swiper/css/scrollbar";
 export function HomeTemplate() {
   return (
     <Main>
+      {/* Fondo decorativo sutil */}
+      <div className="blobs">
+        <div className="blob one"></div>
+        <div className="blob two"></div>
+      </div>
       <Container>
-        <Box>
-          <Carrusel />
-        </Box>
-        <Title>
-          Bienvenido a la App control de gastos <br /> 💵
-        </Title>
-        <SubText>
-          Otra manera de controlar sus gastos <br />
-          <br />
-          MUCHAS GRACIAS POR APOYAR ESTE PROYECTO
-        </SubText>
-        <ContainerAutor>
-          <div className="contentImg">
-            <img src={logojd} alt="" />
-          </div>
-          <div className="contentDescripcion">
-            <b>Ing. Jhon Dueñas</b>
-            <span>"Todos podemos programar"</span>
-          </div>
-        </ContainerAutor>
-        <ButtonContainer>
-          <BtnSave
-            titulo="Unirse a Telegram"
-            bgcolor="#bf94ff"
-            icono={<v.iconoreact />}
-          />
-        </ButtonContainer>
-        <ButtonContainer>
-          <BtnSave
-            titulo="Unirse a Telegram"
-            bgcolor="#bf94ff"
-            icono={<v.iconocorona />}
-          />
-        </ButtonContainer>
+        <HeroSection>
+          {/* Columna Izquierda: Textos y Acciones */}
+          <ContentText>
+            <Title>
+              Controla tus gastos <br />
+              <span>con inteligencia 💵</span>
+            </Title>
+            <SubText>
+              Gestiona tus finanzas de forma intuitiva y moderna. Gracias por
+              ser parte del cambio en el control de gastos.
+            </SubText>
+
+            <ContainerAutor>
+              <div className="contentImg">
+                <img src={logojd} alt="Autor" />
+              </div>
+              <div className="contentDescripcion">
+                <b>Ing. Jhon Dueñas</b>
+                <span>"Todos podemos programar"</span>
+              </div>
+            </ContainerAutor>
+
+            <Actions>
+              <BtnSave
+                titulo="Telegram Comunitario"
+                bgcolor="#bf94ff"
+                icono={<v.iconoreact />}
+              />
+              <BtnSave
+                titulo="Premium Accesss"
+                bgcolor="#ffd700"
+                icono={<v.iconocorona />}
+              />
+            </Actions>
+          </ContentText>
+
+          {/* Columna Derecha: Carrusel Centrado */}
+          <BoxImage>
+            <div className="carrusel-wrapper">
+              <Carrusel />
+            </div>
+          </BoxImage>
+        </HeroSection>
       </Container>
     </Main>
   );
@@ -56,118 +70,162 @@ export function HomeTemplate() {
 const Main = styled.div`
   min-height: 100vh;
   width: 100%;
+  padding: 15px;
   background-color: ${({ theme }) => theme.bgtotal};
   display: flex;
   justify-content: center;
   align-items: center;
   position: relative;
+  box-sizing: border-box;
   overflow: hidden;
+
+  /* Decoración de fondo moderna */
+  .blobs {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+
+    .blob {
+      position: absolute;
+      width: 500px;
+      height: 500px;
+      background: ${({ theme }) => theme.primary || "#bf94ff"};
+      filter: blur(80px);
+      opacity: 0.15;
+      border-radius: 50%;
+    }
+    .one {
+      top: -200px;
+      left: -100px;
+    }
+    .two {
+      bottom: -200px;
+      right: -100px;
+      background: #38bdf8;
+    }
+  }
 `;
 
 const Container = styled.div`
-  width: 75%;
-  margin: 0 auto;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  color: ${({ theme }) => theme.text};
+  width: 90%;
+  max-width: 1200px;
+  z-index: 1;
 `;
 
-const Box = styled.div`
-  width: 50%;
-  height: 100%;
-  min-height: 60vh;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
+const HeroSection = styled.div`
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
   align-items: center;
-
-  @media (max-width: 40em) {
-    min-height: 50vh;
-  }
-`;
-
-const Title = styled.h2`
-  font-size: ${({ theme }) => theme.fontxxl};
-  text-transform: capitalize;
-  color: ${({ theme }) => theme.text};
-  align-self: flex-start;
-  width: 80%;
-  margin: 0 auto;
+  gap: 60px;
 
   @media (max-width: 64em) {
-    width: 100%;
+    grid-template-columns: 1fr;
     text-align: center;
+    gap: 40px;
   }
+`;
 
-  @media (max-width: 40em) {
-    font-size: ${({ theme }) => theme.fontxl};
-  }
+const ContentText = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 1.8rem;
+`;
 
-  @media (max-width: 30em) {
-    font-size: ${({ theme }) => theme.fontlg};
+const Title = styled.h1`
+  font-size: clamp(2.2rem, 5vw, 3.8rem);
+  font-weight: 800;
+  line-height: 1.1;
+  color: ${({ theme }) => theme.text};
+  margin: 0;
+
+  span {
+    color: ${({ theme }) => theme.primary || "#bf94ff"};
+    display: block;
   }
 `;
 
 const SubText = styled.p`
   font-size: ${({ theme }) => theme.fontlg};
   color: ${({ theme }) => theme.colorSubtitle};
-  align-self: flex-start;
-  width: 80%;
-  margin: 1rem auto;
-  font-weight: 400;
+  max-width: 550px;
+  line-height: 1.6;
 
   @media (max-width: 64em) {
+    margin: 0 auto;
+  }
+`;
+
+const BoxImage = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  .carrusel-wrapper {
     width: 100%;
-    text-align: center;
-    font-size: ${({ theme }) => theme.fontmd};
+    max-width: 500px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    //background: rgba(255, 255, 255, 0.02); /* Sutil contenedor */
+    padding: 20px;
+    border-radius: 24px;
+
+    //border: 1px solid rgba(255, 255, 255, 0.05);
   }
 
-  @media (max-width: 40em) {
-    font-size: ${({ theme }) => theme.fontmd};
-  }
-
-  @media (max-width: 30em) {
-    font-size: ${({ theme }) => theme.fontsm};
+  @media (max-width: 64em) {
+    grid-row: 1; // Mueve el carrusel arriba en móvil
+    .carrusel-wrapper {
+      max-width: 300px;
+    }
   }
 `;
 
 const ContainerAutor = styled.div`
   display: flex;
   align-items: center;
-  //justify-content: center;
-  gap: 20px;
+  gap: 15px;
+  width: fit-content;
+
+  @media (max-width: 64em) {
+    margin: 0 auto;
+  }
 
   .contentImg {
-    width: 80px;
-    height: 80px;
+    width: 55px;
+    height: 55px;
     border-radius: 50%;
-    overflow: hidden;
+    border: 2px solid ${({ theme }) => theme.primary || "#bf94ff"};
+    padding: 3px;
     img {
       width: 100%;
       height: 100%;
-      object-fit: contain;
+      border-radius: 50%;
+      object-fit: cover;
     }
   }
   .contentDescripcion {
+    text-align: left;
     display: flex;
     flex-direction: column;
+    b {
+      font-size: 1.1rem;
+      color: ${({ theme }) => theme.text};
+    }
     span {
+      font-size: 0.8rem;
       color: ${({ theme }) => theme.colorSubtitle};
     }
   }
 `;
 
-const ButtonContainer = styled.div`
-  width: 100%;
-  margin: 1rem auto;
+const Actions = styled.div`
   display: flex;
-  justify-content: center;
-  align-self: center;
-  gap: 20px;
+  gap: 15px;
+  flex-wrap: wrap;
 
   @media (max-width: 64em) {
-    width: 100%;
+    justify-content: center;
   }
 `;
