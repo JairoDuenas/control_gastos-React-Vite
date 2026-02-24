@@ -88,7 +88,7 @@ export function MovimientosTemplate() {
 
   return (
     <Container onClick={cerrarDesplegables}>
-      {openRegistro && isLoading && (
+      {openRegistro && (
         <RegistrarMovimientos
           dataSelect={dataSelect}
           state={openRegistro}
@@ -100,8 +100,9 @@ export function MovimientosTemplate() {
         <Header stateConfig={{ state: state, setState: openUser }} />
       </header>
       <section className="tipo">
-        <ContentFiltros>
+        <div className="filter-glass-card ">
           <div
+            className="dropdown-container"
             onClick={(e) => {
               e.stopPropagation();
             }}
@@ -121,16 +122,17 @@ export function MovimientosTemplate() {
               />
             )}
           </div>
-        </ContentFiltros>
-        <ContentFiltro>
-          <BtnFiltro
-            funcion={nuevoRegistro}
-            bgcolor={bgCategoria}
-            textcolor={colorCategoria}
-            icono={<v.agregar />}
-          />
-        </ContentFiltro>
+          <div className="action-button">
+            <BtnFiltro
+              funcion={nuevoRegistro}
+              bgcolor={bgCategoria}
+              textcolor={colorCategoria}
+              icono={<v.agregar />}
+            />
+          </div>
+        </div>
       </section>
+
       <section className="totales">
         <CardTotales
           total={totalMesAñoPendientes}
@@ -151,6 +153,7 @@ export function MovimientosTemplate() {
           icono={<v.balance />}
         />
       </section>
+
       <section className="calendario">
         <CalendarioLineal
           value={value}
@@ -160,63 +163,62 @@ export function MovimientosTemplate() {
         />
       </section>
       <section className="main">
-        <TablaMovimientos
-          data={datamovimientos}
-          setOpenRegistro={setOpenRegistro}
-          setDataSelect={setDataSelect}
-          setAccion={setAccion}
-        />
+        <ContentWrapper>
+          <div className="table-responsive">
+            <TablaMovimientos
+              data={datamovimientos}
+              setOpenRegistro={setOpenRegistro}
+              setDataSelect={setDataSelect}
+              setAccion={setAccion}
+            />
+          </div>
+        </ContentWrapper>
       </section>
     </Container>
   );
 }
 const Container = styled.div`
   min-height: 100vh;
-  padding: 15px;
   width: 100%;
-  box-sizing: border-box;
-  overflow: hidden;
-  display: grid;
-  grid-template:
-    "header" 100px
-    "tipo" 100px
-    "totales" 360px
-    "calendario" 100px
-    "main" auto;
+  padding: 15px;
   background: ${({ theme }) => theme.bgtotal};
   color: ${({ theme }) => theme.text};
-
-  @media ${Device.tablet} {
-    grid-template:
-      "header" 100px
-      "tipo" 100px
-      "totales" 100px
-      "calendario" 100px
-      "main" auto;
-  }
+  display: grid;
+  gap: 25px;
+  box-sizing: border-box;
+  overflow: hidden;
 
   .header {
-    grid-area: header;
-    //background-color: rgba(103, 93, 241, 0.14);
     display: flex;
     align-items: center;
     z-index: 3;
   }
   .tipo {
-    grid-area: tipo;
-    //background-color: rgba(107, 214, 14, 0.14);
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+    z-index: 2;
+
+    .filter-glass-card {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px 20px;
+      border-radius: 18px;
+      background: rgba(255, 255, 255, 0.03); /* Fondo translúcido */
+      backdrop-filter: blur(15px); /* Efecto cristal */
+      -webkit-backdrop-filter: blur(15px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    }
+    .dropdown-container {
+      position: relative;
+    }
   }
 
   .totales {
-    grid-area: totales;
-    //background-color: rgba(229, 67, 26, 0.14);
     display: grid;
     align-items: center;
     grid-template-columns: 1fr;
     gap: 10px;
+    font-weight: 700;
 
     @media ${Device.tablet} {
       grid-template-columns: repeat(3, 1fr);
@@ -224,15 +226,51 @@ const Container = styled.div`
   }
 
   .calendario {
-    grid-area: calendario;
-    //background-color: rgba(77, 237, 106, 0.14);
     display: flex;
     align-items: center;
     justify-content: center;
   }
 
   .main {
-    grid-area: main;
-    //background-color: rgba(179, 46, 241, 0.14);
+    width: 100%;
+    overflow-y: auto;
+
+    .glow-bar {
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 60%;
+      height: 2px;
+      background: ${({ bordercolor }) => bordercolor};
+      box-shadow: 0 0 12px ${({ bordercolor }) => bordercolor};
+      opacity: 0.8;
+    }
+  }
+`;
+
+const ContentWrapper = styled.div`
+  background: rgba(255, 255, 255, 0.02);
+  border-radius: 28px;
+  padding: 25px;
+  border: 1px solid ${({ theme }) => theme.colorborder};
+  box-shadow: inset 0 0 30px ${({ theme }) => theme.shadowtable};
+  min-height: 400px;
+  display: flex;
+  flex-direction: column;
+
+  .table-responsive {
+    animation: fadeIn 0.6s ease-out;
+  }
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(15px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
   }
 `;

@@ -94,7 +94,7 @@ export function CategoriaTemplate({ data }) {
             )}
           </div>
 
-          <div>
+          <div className="table-responsive">
             <TablaCategorias
               data={data}
               setOpenRegistro={setOpenRegistro}
@@ -149,13 +149,6 @@ const Container = styled.div`
     width: 100%;
     overflow-y: auto;
     padding-bottom: 20px;
-    p {
-      font-size: 1.1rem;
-      font-weight: 500;
-      margin-top: -15px;
-      text-align: center;
-      color: ${({ theme }) => theme.text};
-    }
   }
 `;
 

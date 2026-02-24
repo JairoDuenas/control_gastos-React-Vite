@@ -28,19 +28,31 @@ export function CardTotales({ color, total, title, icono }) {
           translatey="-15px"
         />
       </section>
+      <div className="glow-bar" />
     </Container>
   );
 }
 const Container = styled.div`
+  position: relative;
+  //background: rgba(255, 255, 255, 0.03);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
   display: flex;
   align-items: center;
-  background-color: ${({ theme }) => theme.bg};
+  background: ${({ theme }) => theme.bg};
   border-radius: 25px;
   padding: 20px;
   width: 100%;
   box-sizing: border-box;
   overflow: hidden;
   justify-content: space-between;
+
+  &:hover {
+    transform: translateY(-5px);
+    border-color: ${({ bordercolor }) => bordercolor + "60"};
+    transition: 0.5s;
+  }
+
   .contentTextos {
     display: flex;
     flex-direction: column;
@@ -59,5 +71,17 @@ const Container = styled.div`
   }
   .contentIcon {
     display: flex;
+  }
+
+  .glow-bar {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100%;
+    height: 2px;
+    background: ${({ bordercolor }) => bordercolor};
+    box-shadow: 0 0 12px ${({ bordercolor }) => bordercolor};
+    opacity: 0.8;
   }
 `;
