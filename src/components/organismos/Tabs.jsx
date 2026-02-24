@@ -139,7 +139,7 @@ const Container = styled.div`
   flex-direction: column;
   width: 100%;
   height: 95%;
-  padding-top: 20px;
+  //padding-top: 20px;
 
   .tabs {
     list-style: none;
@@ -180,6 +180,8 @@ const Container = styled.div`
     position: relative;
     border-radius: 6px;
     margin-top: 10px;
+    padding: 20px 0;
+
     width: 100%;
     height: 100%;
     display: flex;

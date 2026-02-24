@@ -34,9 +34,11 @@ export function InformesTemplate() {
       <header className="header">
         <Header stateConfig={{ state: state, setState: openUser }} />
       </header>
-      <section className="informes">
-        <ContentFiltros>
+
+      <div className="tipo">
+        <div className="filter-glass-card">
           <div
+            className="dropdown-container"
             onClick={(e) => {
               e.stopPropagation();
             }}
@@ -56,9 +58,10 @@ export function InformesTemplate() {
               />
             )}
           </div>
-        </ContentFiltros>
-        <h2>Informes</h2>
-      </section>
+          <h2>Informes</h2>
+        </div>
+      </div>
+
       <section className="calendario">
         <CalendarioLineal
           value={value}
@@ -67,56 +70,69 @@ export function InformesTemplate() {
           setFormatoFecha={setFormatoFecha}
         />
       </section>
-      <section className="tabs">
-        <Tabs />
-      </section>
+      <ContentWrapper>
+        <section className="tabs">
+          <Tabs />
+        </section>
+      </ContentWrapper>
     </Container>
   );
 }
 const Container = styled.div`
-  min-height: 100vh;
+  min-height: 85vh;
   width: 100%;
   padding: 15px;
   background: ${({ theme }) => theme.bgtotal};
   color: ${({ theme }) => theme.text};
   display: grid;
+  gap: 25px;
   box-sizing: border-box;
   overflow: hidden;
-  grid-template: "header" 100px "informes" 100px "calendario" 50px "tabs" auto;
-
-  @media ${Device.tablet} {
-    grid-template:
-      "header" 100px
-      "informes" 100px
-      "calendario" 80px
-      "tabs" auto;
-  }
 
   .header {
-    grid-area: header;
-    //background-color: rgba(103, 93, 241, 0.14);
     display: flex;
     align-items: center;
+    z-index: 3;
   }
 
-  .informes {
-    grid-area: informes;
-    //background-color: rgba(229, 67, 26, 0.14);
-    display: flex;
-    align-items: center;
-    gap: 20px;
+  .tipo {
+    z-index: 2;
+
+    .filter-glass-card {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px 20px;
+      border-radius: 18px;
+      background: rgba(255, 255, 255, 0.03); /* Fondo translúcido */
+      backdrop-filter: blur(15px); /* Efecto cristal */
+      -webkit-backdrop-filter: blur(15px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    }
+    .dropdown-container {
+      position: relative;
+    }
   }
 
   .calendario {
-    grid-area: calendario;
-    //background-color: rgba(77, 237, 106, 0.14);
     display: flex;
     align-items: center;
     justify-content: center;
   }
 
   .tabs {
-    grid-area: tabs;
-    //background-color: rgba(179, 46, 241, 0.14);
+    animation: fadeIn 0.6s ease-out;
   }
+`;
+
+const ContentWrapper = styled.div`
+  background: rgba(255, 255, 255, 0.02);
+  border-radius: 28px;
+  padding: 25px;
+  border: 1px solid ${({ theme }) => theme.colorborder};
+  box-shadow: inset 0 0 30px ${({ theme }) => theme.shadowtable};
+  min-height: 400px;
+  display: flex;
+  flex-direction: column;
 `;

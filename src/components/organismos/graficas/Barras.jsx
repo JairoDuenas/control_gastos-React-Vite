@@ -9,7 +9,6 @@ import {
   Legend,
 } from "chart.js";
 import { Bar } from "react-chartjs-2";
-//import faker from "faker";
 
 import { useUsuariosStore } from "../../../store/UsuariosStore";
 
@@ -54,17 +53,17 @@ const Container = styled.div`
   flex-wrap: wrap;
   justify-content: center;
   align-items: center;
-  gap: 18px;
+  gap: 40px;
 `;
 const ContentCars = styled.div`
   display: flex;
   justify-content: space-between;
   .contentDescripcion {
     display: flex;
-    gap: 10px;
+    gap: 15px;
   }
   .contentValor {
     display: flex;
-    gap: 10px;
+    gap: 8px;
   }
 `;
