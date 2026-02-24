@@ -84,7 +84,7 @@ export function CalendarioLineal({ value, setValue, setFormatoFecha }) {
   );
 }
 const Container = styled.div`
-  width: 50px;
+  width: auto;
   border-radius: 10px;
   height: 100%;
   display: flex;
@@ -99,21 +99,25 @@ const Container = styled.div`
 
     .subcontainer {
       display: flex;
+      gap: 15px;
       color: ${(props) => props.$colortext};
       align-items: center;
       justify-content: center;
 
       .contentValue {
-        border: 2px solid ${(props) => props.$colortext};
-        border-radius: 30px;
+        border: 2px solid ${(props) => props.$colortext}+ "40";
+        background: ${({ theme }) => theme.bg};
+        backdrop-filter: blur(8px);
+        -webkit-backdrop-filter: blur(8px);
+        border-radius: 20px;
         text-align: center;
         display: flex;
         align-items: center;
-        width: 160px;
-        height: 100%;
         justify-content: center;
-        //padding: 10px;
+        min-width: 180px;
+        height: 100%;
       }
+
       .atras {
         cursor: pointer;
         margin-left: 20px;
@@ -130,7 +134,25 @@ const Container = styled.div`
           height: 45px;
         }
       }
+
+      .atras,
+      .adelante {
+        transition: all 0.2s ease;
+        opacity: 0.7;
+        &:hover {
+          opacity: 1;
+          transform: scale(1.2);
+        }
+      }
+
+      p {
+        font-weight: 600;
+        font-size: 1.1rem;
+        letter-spacing: 1px;
+        text-shadow: 0 0 8px ${(props) => props.$colortext + "40"};
+      }
     }
+
     .current-date {
       font-size: 1.45rem;
       font-weight: 500;
