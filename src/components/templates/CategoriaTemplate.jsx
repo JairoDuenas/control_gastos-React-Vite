@@ -1,11 +1,9 @@
 import styled from "styled-components";
 import { Header } from "../organismos/Header";
-import { ContentFiltros } from "../atomos/ContentFiltros";
 import { BtnDesplegable } from "../moleculas/BtnDesplegable";
 import { useOperaciones } from "../../store/OperacionesStore";
 import { ListaMenuDesplegable } from "../moleculas/ListaMenuDesplegable";
 import { DataDesplegableTipo } from "../../utils/dataEstatica";
-import { ContentFiltro } from "../atomos/ContentFiltro";
 import { BtnFiltro } from "../moleculas/BtnFiltro";
 import { v } from "../../styles/variables";
 import { TablaCategorias } from "../../components/organismos/tablas/TablaCategorias";
@@ -51,8 +49,9 @@ export function CategoriaTemplate({ data }) {
       </header>
 
       <section className="tipo">
-        <ContentFiltros>
+        <div className="filter-glass-card">
           <div
+            className="dropdown-container"
             onClick={(e) => {
               e.stopPropagation();
             }}
@@ -72,31 +71,38 @@ export function CategoriaTemplate({ data }) {
               />
             )}
           </div>
-        </ContentFiltros>
-        <ContentFiltro>
-          <BtnFiltro
-            funcion={nuevoRegistro}
-            bgcolor={bgCategoria}
-            textcolor={colorCategoria}
-            icono={<v.agregar />}
-          />
-        </ContentFiltro>
+          <div className="action-button">
+            <BtnFiltro
+              funcion={nuevoRegistro}
+              bgcolor={bgCategoria}
+              textcolor={colorCategoria}
+              icono={<v.agregar />}
+            />
+          </div>
+        </div>
       </section>
-      <section className="main">
-        {data.length == 0 && (
-          <LottieAnimacion
-            alto="300px"
-            ancho="300px"
-            animacion={tipo == "i" ? vacioverde : vaciorojo}
-          />
-        )}
 
-        <TablaCategorias
-          data={data}
-          setOpenRegistro={setOpenRegistro}
-          setDataSelect={setDataSelect}
-          setAccion={setAccion}
-        />
+      <section className="main">
+        <ContentWrapper>
+          <div>
+            {data.length == 0 && (
+              <LottieAnimacion
+                alto="300px"
+                ancho="300px"
+                animacion={tipo == "i" ? vacioverde : vaciorojo}
+              />
+            )}
+          </div>
+
+          <div>
+            <TablaCategorias
+              data={data}
+              setOpenRegistro={setOpenRegistro}
+              setDataSelect={setDataSelect}
+              setAccion={setAccion}
+            />
+          </div>
+        </ContentWrapper>
       </section>
     </Container>
   );
@@ -108,31 +114,73 @@ const Container = styled.div`
   background: ${({ theme }) => theme.bgtotal};
   color: ${({ theme }) => theme.text};
   display: grid;
-  grid-template: "header" 100px "tipo" 100px "main" auto;
+  grid-template-rows: auto auto 1fr;
+  gap: 25px;
   box-sizing: border-box;
   overflow: hidden;
 
   .header {
-    grid-area: header;
-    //background-color: rgba(103, 93, 241, 0.14);
     display: flex;
     align-items: center;
-    z-index: 3;
+    z-index: 10;
   }
 
   .tipo {
-    grid-area: tipo;
-    //background-color: rgba(229, 67, 26, 0.14);
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    z-index: 2;
+    z-index: 5;
 
-    //padding: 20px;
+    .filter-glass-card {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px 20px;
+      border-radius: 18px;
+      background: rgba(255, 255, 255, 0.03); /* Fondo translúcido */
+      backdrop-filter: blur(15px); /* Efecto cristal */
+      -webkit-backdrop-filter: blur(15px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    }
+    .dropdown-container {
+      position: relative;
+    }
   }
 
   .main {
-    grid-area: main;
-    //background-color: rgba(179, 46, 241, 0.14);
+    width: 100%;
+    overflow-y: auto;
+    padding-bottom: 20px;
+    p {
+      font-size: 1.1rem;
+      font-weight: 500;
+      margin-top: -15px;
+      text-align: center;
+      color: ${({ theme }) => theme.text};
+    }
+  }
+`;
+
+const ContentWrapper = styled.div`
+  background: rgba(255, 255, 255, 0.02);
+  border-radius: 28px;
+  padding: 25px;
+  border: 1px solid ${({ theme }) => theme.colorborder};
+  box-shadow: inset 0 0 30px ${({ theme }) => theme.shadowtable};
+  min-height: 400px;
+  display: flex;
+  flex-direction: column;
+
+  .table-responsive {
+    animation: fadeIn 0.6s ease-out;
+  }
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(15px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
   }
 `;

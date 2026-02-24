@@ -3,6 +3,7 @@ export const Light = {
   body: "#fff",
   text: "#3C3C3C",
   bodyRgba: "255, 255, 255",
+  colorborder: "rgba(8, 8, 8, 0.2)",
   textRgba: "32,32,32",
   carouselColor: "#9955ff",
   fontxs: "0.75em",
@@ -29,7 +30,7 @@ export const Light = {
   bgtgderecha: "#eeeeee",
   colorToggle: "#F9743B",
   translateToggle: "-12px",
-
+  shadowtable: "rgba(29, 3, 3, 0.03)",
   logorotate: "360deg",
   slideroffset: "0.3em",
   sizeoficon: "1.4em",
@@ -42,6 +43,7 @@ export const Dark = {
   body: "#202020",
   text: "#fff",
   bodyRgba: "32,32,32",
+  colorborder: "rgba(255, 255, 255, 0.1)",
   textRgba: "255, 255, 255",
   carouselColor: "#9955ff",
   fontxs: "0.75em",
@@ -67,7 +69,7 @@ export const Dark = {
   bgtotal: "#1C1C1E",
   colorToggle: "rgb(52, 131, 235)",
   translateToggle: "26px",
-
+  shadowtable: "rgba(255, 255, 255, 0.03)",
   logorotate: "-360deg",
   slideroffset: "0.3em",
   sizeoficon: "1.4em",
