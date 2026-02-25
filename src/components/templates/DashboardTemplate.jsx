@@ -19,6 +19,8 @@ import { SpinnerWrapper } from "../atomos/SpinnerWraper.jsx";
 import { FilterGlass } from "../atomos/FilterGlass.jsx";
 import { ContentWrapper } from "../atomos/ContentWrapper.jsx";
 import { useReporteMovimientosQuery } from "../../queries/useReporteMovimientosQuery.jsx";
+import { RadarGrafica } from "../organismos/graficas/Radar.jsx";
+import { useDashboardGrafica } from "../../hooks/useDashboardGrafica.jsx";
 
 export function DashboardTemplate() {
   const [value, setValue] = useState(dayjs(Date.now()));
@@ -55,7 +57,7 @@ export function DashboardTemplate() {
   });
 
   // Gráfica con chartjs
-  const { datagrafica } = useInformesGrafica();
+  const { datagrafica } = useDashboardGrafica();
 
   return (
     <Container onClick={cerrarDesplegables}>
@@ -104,7 +106,7 @@ export function DashboardTemplate() {
               <SpinnerLoader />
             </SpinnerWrapper>
           ) : (
-            <Dona
+            <RadarGrafica
               datagrafica={datagrafica}
               data={dataRptMovimientosAñoMes}
               titulo={tituloBtnDesMovimientos}
