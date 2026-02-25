@@ -12,6 +12,8 @@ import { DataDesplegableMovimientos } from "../../utils/dataEstatica";
 import { useOperaciones } from "../../store/OperacionesStore";
 import { v } from "../../styles/variables";
 import { useRegistroControls } from "../../hooks/useRegistroControls.jsx";
+import { ContentWrapper } from "../atomos/ContentWrapper.jsx";
+import { FilterGlass } from "../atomos/FilterGlass.jsx";
 
 export function InformesTemplate() {
   const { setTipo, colorCategoria, bgCategoria, tituloBtnDesMovimientos } =
@@ -36,30 +38,31 @@ export function InformesTemplate() {
       </header>
 
       <div className="tipo">
-        <div className="filter-glass-card">
+        <FilterGlass>
           <div
             className="dropdown-container"
             onClick={(e) => {
               e.stopPropagation();
             }}
           >
-            <BtnDesplegable
-              textcolor={colorCategoria}
-              bgcolor={bgCategoria}
-              text={tituloBtnDesMovimientos}
-              funcion={openTipo}
-            />
-
-            {stateTipo && (
-              <ListaMenuDesplegable
-                data={DataDesplegableMovimientos}
-                top="112%"
-                funcion={(p) => cambiarTipo(p)}
+            <ContentFiltros>
+              <BtnDesplegable
+                textcolor={colorCategoria}
+                bgcolor={bgCategoria}
+                text={tituloBtnDesMovimientos}
+                funcion={openTipo}
               />
-            )}
+              {stateTipo && (
+                <ListaMenuDesplegable
+                  data={DataDesplegableMovimientos}
+                  top="112%"
+                  funcion={(p) => cambiarTipo(p)}
+                />
+              )}
+            </ContentFiltros>
           </div>
           <h2>Informes</h2>
-        </div>
+        </FilterGlass>
       </div>
 
       <section className="calendario">
@@ -97,22 +100,10 @@ const Container = styled.div`
 
   .tipo {
     z-index: 2;
+  }
 
-    .filter-glass-card {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 12px 20px;
-      border-radius: 18px;
-      background: rgba(255, 255, 255, 0.03); /* Fondo translúcido */
-      backdrop-filter: blur(15px); /* Efecto cristal */
-      -webkit-backdrop-filter: blur(15px);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-    }
-    .dropdown-container {
-      position: relative;
-    }
+  .dropdown-container {
+    position: relative;
   }
 
   .calendario {
@@ -124,15 +115,4 @@ const Container = styled.div`
   .tabs {
     animation: fadeIn 0.6s ease-out;
   }
-`;
-
-const ContentWrapper = styled.div`
-  background: rgba(255, 255, 255, 0.02);
-  border-radius: 28px;
-  padding: 25px;
-  border: 1px solid ${({ theme }) => theme.colorborder};
-  box-shadow: inset 0 0 30px ${({ theme }) => theme.shadowtable};
-  min-height: 400px;
-  display: flex;
-  flex-direction: column;
 `;

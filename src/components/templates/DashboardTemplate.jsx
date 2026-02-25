@@ -17,6 +17,7 @@ import { useRegistroControls } from "../../hooks/useRegistroControls.jsx.jsx";
 import { useDashboardQuery } from "../../queries/useDashboardQuery.jsx";
 import { useDashboardGrafica } from "../../hooks/useDashboardGrafica.jsx";
 import { SpinnerLoader } from "../moleculas/Spinner.jsx";
+import { SpinnerWrapper } from "../atomos/SpinnerWraper.jsx";
 
 export function DashboardTemplate() {
   const [value, setValue] = useState(dayjs(Date.now()));
@@ -162,11 +163,4 @@ const Container = styled.div`
     margin-top: 20px;
     box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
   }
-`;
-
-const SpinnerWrapper = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 300px; /* o lo que mida tu card */
 `;

@@ -12,6 +12,7 @@ import { LottieAnimacion } from "../moleculas/LottieAnimacion";
 import vacioverde from "../../assets/vacioverde.json";
 import vaciorojo from "../../assets/vaciorojo.json";
 import { useRegistroControls } from "../../hooks/useRegistroControls.jsx";
+import { FilterGlass } from "../atomos/FilterGlass.jsx";
 
 export function CategoriaTemplate({ data }) {
   const { colorCategoria, tituloBtnDes, bgCategoria, setTipo, tipo } =
@@ -49,7 +50,7 @@ export function CategoriaTemplate({ data }) {
       </header>
 
       <section className="tipo">
-        <div className="filter-glass-card">
+        <FilterGlass>
           <div
             className="dropdown-container"
             onClick={(e) => {
@@ -71,6 +72,7 @@ export function CategoriaTemplate({ data }) {
               />
             )}
           </div>
+
           <div className="action-button">
             <BtnFiltro
               funcion={nuevoRegistro}
@@ -79,7 +81,7 @@ export function CategoriaTemplate({ data }) {
               icono={<v.agregar />}
             />
           </div>
-        </div>
+        </FilterGlass>
       </section>
 
       <section className="main">
@@ -127,22 +129,10 @@ const Container = styled.div`
 
   .tipo {
     z-index: 5;
+  }
 
-    .filter-glass-card {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 12px 20px;
-      border-radius: 18px;
-      background: rgba(255, 255, 255, 0.03); /* Fondo translúcido */
-      backdrop-filter: blur(15px); /* Efecto cristal */
-      -webkit-backdrop-filter: blur(15px);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-    }
-    .dropdown-container {
-      position: relative;
-    }
+  .dropdown-container {
+    position: relative;
   }
 
   .main {

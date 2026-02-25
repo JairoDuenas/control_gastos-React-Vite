@@ -8,6 +8,8 @@ import { useMovimientosStore } from "../../store/MovimientosStore";
 import { useQuery } from "@tanstack/react-query";
 import { useOperaciones } from "../../store/OperacionesStore";
 import { useUsuariosStore } from "../../store/UsuariosStore";
+import { SpinnerLoader } from "../moleculas/Spinner";
+import { SpinnerWrapper } from "../atomos/SpinnerWraper";
 
 export function Tabs() {
   const [activeTab, setActiveTab] = useState(0);
@@ -69,13 +71,6 @@ export function Tabs() {
     enabled: !!id_usuario,
   });
 
-  if (isLoading) {
-    return <h1>Cargando...</h1>;
-  }
-  if (error) {
-    return <h1>Error</h1>;
-  }
-
   // Layout
   return (
     <Container className="container" $activeTab={`${activeTab}00%`}>
@@ -104,28 +99,29 @@ export function Tabs() {
       </ul>
 
       <div className="tab-content">
-        {activeTab == 0 && (
+        {isLoading ? (
+          <SpinnerWrapper>
+            <SpinnerLoader />
+          </SpinnerWrapper>
+        ) : activeTab === 0 ? (
           <Dona
             datagrafica={datagrafica}
             data={dataRptMovimientosAñoMes}
             titulo={tituloBtnDesMovimientos}
           />
-        )}
-
-        {activeTab === 1 && (
+        ) : activeTab === 1 ? (
           <Lineal
             datagrafica={datagrafica}
             data={dataRptMovimientosAñoMes}
             titulo={tituloBtnDesMovimientos}
           />
-        )}
-        {activeTab === 2 && (
+        ) : activeTab === 2 ? (
           <Barras
             datagrafica={datagrafica}
             data={dataRptMovimientosAñoMes}
             titulo={tituloBtnDesMovimientos}
           />
-        )}
+        ) : null}
       </div>
     </Container>
   );
@@ -179,9 +175,8 @@ const Container = styled.div`
   .tab-content {
     position: relative;
     border-radius: 6px;
-    margin-top: 10px;
+    margin-top: 20px;
     padding: 20px 0;
-
     width: 100%;
     height: 100%;
     display: flex;
