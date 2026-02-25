@@ -3,7 +3,7 @@ import { useMovimientosStore } from "../store/MovimientosStore";
 
 // Gráfica de dona con chartjs
 
-export function useDashboardGrafica() {
+export function useInformesGrafica() {
   const { dataRptMovimientosAñoMes } = useMovimientosStore();
 
   const datagrafica = useMemo(() => {

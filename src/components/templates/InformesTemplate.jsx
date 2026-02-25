@@ -3,7 +3,6 @@ import { Header } from "../organismos/Header";
 import { useState } from "react";
 import dayjs from "dayjs";
 import { CalendarioLineal } from "../organismos/CalendarioLineal";
-import { Device } from "../../styles/breakPoins";
 import { Tabs } from "../organismos/Tabs";
 import { ContentFiltros } from "../atomos/ContentFiltros";
 import { BtnDesplegable } from "../moleculas/BtnDesplegable";

@@ -10,14 +10,15 @@ import { CalendarioLineal } from "../organismos/CalendarioLineal";
 import dayjs from "dayjs";
 import { useMovimientosStore } from "../../store/MovimientosStore";
 import { useUsuariosStore } from "../../store/UsuariosStore";
-import { Device } from "../../styles/breakPoins";
 import { v } from "../../styles/variables";
 import { Dona } from "../organismos/graficas/Dona";
 import { useRegistroControls } from "../../hooks/useRegistroControls.jsx.jsx";
-import { useDashboardQuery } from "../../queries/useDashboardQuery.jsx";
-import { useDashboardGrafica } from "../../hooks/useDashboardGrafica.jsx";
+import { useInformesGrafica } from "../../hooks/useInformesGrafica.jsx";
 import { SpinnerLoader } from "../moleculas/Spinner.jsx";
 import { SpinnerWrapper } from "../atomos/SpinnerWraper.jsx";
+import { FilterGlass } from "../atomos/FilterGlass.jsx";
+import { ContentWrapper } from "../atomos/ContentWrapper.jsx";
+import { useReporteMovimientosQuery } from "../../queries/useReporteMovimientosQuery.jsx";
 
 export function DashboardTemplate() {
   const [value, setValue] = useState(dayjs(Date.now()));
@@ -46,7 +47,7 @@ export function DashboardTemplate() {
   } = useRegistroControls({ setTipo });
 
   // Query
-  const { isLoading } = useDashboardQuery({
+  const { isLoading } = useReporteMovimientosQuery({
     año,
     mes,
     tipo,
@@ -54,7 +55,7 @@ export function DashboardTemplate() {
   });
 
   // Gráfica con chartjs
-  const { datagrafica } = useDashboardGrafica();
+  const { datagrafica } = useInformesGrafica();
 
   return (
     <Container onClick={cerrarDesplegables}>
@@ -62,9 +63,10 @@ export function DashboardTemplate() {
         <Header stateConfig={{ state: state, setState: openUser }} />
       </header>
 
-      <section className="dashboard">
-        <ContentFiltros>
+      <section className="tipo">
+        <FilterGlass>
           <div
+            className="dropdown-container"
             onClick={(e) => {
               e.stopPropagation();
             }}
@@ -84,8 +86,8 @@ export function DashboardTemplate() {
               />
             )}
           </div>
-        </ContentFiltros>
-        <h2>Dashboard</h2>
+          <h2>Dashboard</h2>
+        </FilterGlass>
       </section>
       <section className="calendario">
         <CalendarioLineal
@@ -95,60 +97,50 @@ export function DashboardTemplate() {
           setFormatoFecha={setFormatoFecha}
         />
       </section>
-      <section className="card">
-        {isLoading ? (
-          <SpinnerWrapper>
-            <SpinnerLoader />
-          </SpinnerWrapper>
-        ) : (
-          <Dona
-            datagrafica={datagrafica}
-            data={dataRptMovimientosAñoMes}
-            titulo={tituloBtnDesMovimientos}
-          />
-        )}
-      </section>
+      <ContentWrapper>
+        <section className="card">
+          {isLoading ? (
+            <SpinnerWrapper>
+              <SpinnerLoader />
+            </SpinnerWrapper>
+          ) : (
+            <Dona
+              datagrafica={datagrafica}
+              data={dataRptMovimientosAñoMes}
+              titulo={tituloBtnDesMovimientos}
+            />
+          )}
+        </section>
+      </ContentWrapper>
     </Container>
   );
 }
 const Container = styled.div`
-  min-height: 100vh;
+  min-height: 85vh;
   width: 100%;
   padding: 15px;
-  //gap: 20px;
   background: ${({ theme }) => theme.bgtotal};
   color: ${({ theme }) => theme.text};
   display: grid;
+  gap: 25px;
   box-sizing: border-box;
   overflow: hidden;
-  grid-template: "header" 100px "dashboard" 100px "calendario" 50px "card" auto;
-
-  @media ${Device.tablet} {
-    grid-template:
-      "header" 100px
-      "dashboard" 100px
-      "calendario" 80px
-      "card" auto;
-  }
 
   .header {
-    grid-area: header;
-    // background-color: rgba(103, 93, 241, 0.14);
     display: flex;
     align-items: center;
+    z-index: 3;
   }
 
-  .dashboard {
-    grid-area: dashboard;
-    //background-color: rgba(229, 67, 26, 0.14);
-    display: flex;
-    align-items: center;
-    gap: 20px;
+  .tipo {
+    z-index: 2;
+  }
+
+  .dropdown-container {
+    position: relative;
   }
 
   .calendario {
-    grid-area: calendario;
-    //background-color: rgba(77, 237, 106, 0.14);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -162,5 +154,6 @@ const Container = styled.div`
     border-radius: 20px;
     margin-top: 20px;
     box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+    padding: 20px 0;
   }
 `;

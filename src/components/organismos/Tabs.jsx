@@ -5,11 +5,12 @@ import { Dona } from "../organismos/graficas/Dona";
 import { Lineal } from "./graficas/Lineal";
 import { Barras } from "./graficas/Barras";
 import { useMovimientosStore } from "../../store/MovimientosStore";
-import { useQuery } from "@tanstack/react-query";
 import { useOperaciones } from "../../store/OperacionesStore";
 import { useUsuariosStore } from "../../store/UsuariosStore";
 import { SpinnerLoader } from "../moleculas/Spinner";
 import { SpinnerWrapper } from "../atomos/SpinnerWraper";
+import { useInformesGrafica } from "../../hooks/useInformesGrafica";
+import { useReporteMovimientosQuery } from "../../queries/useReporteMovimientosQuery";
 
 export function Tabs() {
   const [activeTab, setActiveTab] = useState(0);
@@ -20,46 +21,20 @@ export function Tabs() {
   const { id_usuario } = useUsuariosStore();
   const { año, mes, tipo, tituloBtnDesMovimientos } = useOperaciones();
 
-  const { dataRptMovimientosAñoMes, rptMovimientosAñoMes } =
-    useMovimientosStore();
+  const { dataRptMovimientosAñoMes } = useMovimientosStore();
 
-  // Gráfica de dona con chartjs
-  const datagrafica = {
-    type: "line",
-    labels: dataRptMovimientosAñoMes?.map((item) => item.descripcion),
-    datasets: [
-      {
-        tension: 0.3,
-        filler: true,
-        label: "Total",
-        spacing: 5,
-        borderRadius: 5,
-        borderAlign: "inner",
-        minBarLength: "100px",
-        data: dataRptMovimientosAñoMes?.map((item) => item.total),
-        backgroundColor: [
-          "rgba(255, 99, 132, 0.2)",
-          "rgba(54, 162, 235, 0.2)",
-          "rgba(255, 206, 86, 0.2)",
-          "rgba(75, 192, 192, 0.2)",
-          "rgba(153, 102, 255, 0.2)",
-          "rgba(255, 159, 64, 0.2)",
-        ],
-        borderColor: [
-          "rgba(255, 99, 132, 1)",
-          "rgba(54, 162, 235, 1)",
-          "rgba(255, 206, 86, 1)",
-          "rgba(75, 192, 192, 1)",
-          "rgba(153, 102, 255, 1)",
-          "rgba(255, 159, 64, 1)",
-        ],
-        borderWidth: 2,
-      },
-    ],
-  };
+  // datos para la gráfica
+  const { datagrafica } = useInformesGrafica();
 
   // Query para reporte de movimientos
-  const { isLoading, error } = useQuery({
+  const { isLoading } = useReporteMovimientosQuery({
+    año,
+    mes,
+    tipo,
+    id_usuario,
+  });
+  {
+    /* const { isLoading, error } = useQuery({
     queryKey: ["reporte movimientos", año, mes, tipo, id_usuario],
     queryFn: () =>
       rptMovimientosAñoMes({
@@ -70,6 +45,17 @@ export function Tabs() {
       }),
     enabled: !!id_usuario,
   });
+
+  */
+  }
+
+  // Navegación en la tabs
+  const componentes = {
+    0: Dona,
+    1: Lineal,
+    2: Barras,
+  };
+  const ComponenteActivo = componentes[activeTab];
 
   // Layout
   return (
@@ -103,20 +89,8 @@ export function Tabs() {
           <SpinnerWrapper>
             <SpinnerLoader />
           </SpinnerWrapper>
-        ) : activeTab === 0 ? (
-          <Dona
-            datagrafica={datagrafica}
-            data={dataRptMovimientosAñoMes}
-            titulo={tituloBtnDesMovimientos}
-          />
-        ) : activeTab === 1 ? (
-          <Lineal
-            datagrafica={datagrafica}
-            data={dataRptMovimientosAñoMes}
-            titulo={tituloBtnDesMovimientos}
-          />
-        ) : activeTab === 2 ? (
-          <Barras
+        ) : ComponenteActivo ? (
+          <ComponenteActivo
             datagrafica={datagrafica}
             data={dataRptMovimientosAñoMes}
             titulo={tituloBtnDesMovimientos}
