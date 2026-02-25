@@ -1,11 +1,9 @@
 import styled from "styled-components";
 import { Header } from "../organismos/Header";
-import { useOperaciones } from "../../store/OperacionesStore";
 import { useRegistroControls } from "../../hooks/useRegistroControls.jsx";
+import { useOperaciones } from "../../store/OperacionesStore.jsx";
 
-export function PlantillaBase() {
-  //const [state, setState] = useState(false);
-
+export function AcercaDeTemplate() {
   // Stores
   const { setTipo } = useOperaciones();
 

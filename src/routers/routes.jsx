@@ -8,6 +8,7 @@ import { Categorias } from "../pages/Categorias";
 import { Movimientos } from "../pages/Movimientos";
 import { Informes } from "../pages/Informes";
 import { Dashboard } from "../pages/Dashboard";
+import { AcercaDe } from "../pages/AcercaDe";
 
 export function MyRoutes() {
   const { user } = UserAuth();
@@ -21,6 +22,7 @@ export function MyRoutes() {
         <Route path="/movimientos" element={<Movimientos />} />
         <Route path="/informes" element={<Informes />} />
         <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/acercade" element={<AcercaDe />} />
       </Route>
     </Routes>
   );
