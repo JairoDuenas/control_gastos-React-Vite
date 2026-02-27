@@ -57,7 +57,7 @@ const Container = styled.div`
   gap: 10px;
   color: ${({ theme }) => theme.text};
   transition: 0.3s;
-  z-index: 3;
+  z-index: 999;
   @media ${Device.tablet} {
     width: 400px;
   }

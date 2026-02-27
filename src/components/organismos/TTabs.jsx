@@ -7,58 +7,88 @@ import { Barras } from "./graficas/Barras";
 import { useMovimientosStore } from "../../store/MovimientosStore";
 import { useOperaciones } from "../../store/OperacionesStore";
 import { useUsuariosStore } from "../../store/UsuariosStore";
+import { SpinnerLoader } from "../moleculas/Spinner";
+import { SpinnerWrapper } from "../atomos/SpinnerWraper";
 import { useInformesGrafica } from "../../hooks/useInformesGrafica";
 import { useReporteMovimientosQuery } from "../../queries/useReporteMovimientosQuery";
-import { SkeletonGrafica } from "../moleculas/SkeletonGrafica.jsx";
 
 export function Tabs() {
   const [activeTab, setActiveTab] = useState(0);
-  const handleClick = (index) => setActiveTab(index);
+  const handleClick = (index) => {
+    setActiveTab(index);
+  };
 
   const { id_usuario } = useUsuariosStore();
   const { año, mes, tipo, tituloBtnDesMovimientos } = useOperaciones();
+
   const { dataRptMovimientosAñoMes } = useMovimientosStore();
+
+  // datos para la gráfica
   const { datagrafica } = useInformesGrafica();
 
+  // Query para reporte de movimientos
   const { isLoading } = useReporteMovimientosQuery({
     año,
     mes,
     tipo,
     id_usuario,
   });
+  {
+    /* const { isLoading, error } = useQuery({
+    queryKey: ["reporte movimientos", año, mes, tipo, id_usuario],
+    queryFn: () =>
+      rptMovimientosAñoMes({
+        año: año,
+        mes: mes,
+        tipocategoria: tipo,
+        id_usuario: id_usuario,
+      }),
+    enabled: !!id_usuario,
+  });
 
-  const componentes = { 0: Dona, 1: Lineal, 2: Barras };
+  */
+  }
+
+  // Navegación en la tabs
+  const componentes = {
+    0: Dona,
+    1: Lineal,
+    2: Barras,
+  };
   const ComponenteActivo = componentes[activeTab];
 
+  // Layout
   return (
-    <Container $activeTab={`${activeTab}00%`}>
-      {/* ── Selector de tabs ── */}
+    <Container className="container" $activeTab={`${activeTab}00%`}>
       <ul className="tabs">
         <li
           className={activeTab === 0 ? "active" : ""}
           onClick={() => handleClick(0)}
         >
-          <v.iconopie />
+          {<v.iconopie />}
         </li>
+
         <li
           className={activeTab === 1 ? "active" : ""}
           onClick={() => handleClick(1)}
         >
-          <v.iconolineal />
+          {<v.iconolineal />}
         </li>
+
         <li
           className={activeTab === 2 ? "active" : ""}
           onClick={() => handleClick(2)}
         >
-          <v.iconobars />
+          {<v.iconobars />}
         </li>
-        <span className="glider" />
+        <span className="glider"></span>
       </ul>
 
-      {/* ── Contenido ── */}
       <div className="tab-content">
         {isLoading ? (
-          <SkeletonGrafica bars={7} height="260px" />
+          <SpinnerWrapper>
+            <SpinnerLoader />
+          </SpinnerWrapper>
         ) : ComponenteActivo ? (
           <ComponenteActivo
             datagrafica={datagrafica}
@@ -79,6 +109,7 @@ const Container = styled.div`
   flex-direction: column;
   width: 100%;
   height: 95%;
+  //padding-top: 20px;
 
   .tabs {
     list-style: none;
@@ -101,7 +132,6 @@ const Container = styled.div`
       cursor: pointer;
       z-index: 2;
     }
-
     .glider {
       position: absolute;
       display: flex;
@@ -112,7 +142,7 @@ const Container = styled.div`
       border-radius: 99px;
       transition: 0.25s ease-in-out;
       box-shadow: 0px 10px 20px -3px ${({ theme }) => theme.bg5};
-      transform: translateX(${({ $activeTab }) => $activeTab});
+      transform: translateX(${(props) => props.$activeTab});
     }
   }
 
@@ -120,7 +150,7 @@ const Container = styled.div`
     position: relative;
     border-radius: 6px;
     margin-top: 20px;
-    padding: 20px;
+    padding: 20px 0;
     width: 100%;
     height: 100%;
     display: flex;

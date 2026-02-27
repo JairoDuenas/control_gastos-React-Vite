@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
 import { useState } from "react";
 import { Header } from "../organismos/Header";
 import { CalendarioLineal } from "../organismos/CalendarioLineal";
@@ -6,7 +6,6 @@ import dayjs from "dayjs";
 import { CardTotales } from "../organismos/CardTotales";
 import { useOperaciones } from "../../store/OperacionesStore";
 import { v } from "../../styles/variables";
-//import { useQuery } from "@tanstack/react-query";
 import { useMovimientosStore } from "../../store/MovimientosStore";
 import { useUsuariosStore } from "../../store/UsuariosStore";
 import { Device } from "../../styles/breakPoins";
@@ -14,22 +13,41 @@ import { TablaMovimientos } from "../organismos/tablas/TablaMovimientos";
 import { useCuentaStore } from "../../store/CuentaStore";
 import { useCategoriasStore } from "../../store/CategoriasStore";
 import { DataDesplegableMovimientos } from "../../utils/dataEstatica";
-import { ContentFiltros } from "../atomos/ContentFiltros";
-import { ContentFiltro } from "../atomos/ContentFiltro";
 import { BtnDesplegable } from "../moleculas/BtnDesplegable";
 import { ListaMenuDesplegable } from "../moleculas/ListaMenuDesplegable";
 import { BtnFiltro } from "../moleculas/BtnFiltro";
 import { RegistrarMovimientos } from "../organismos/formularios/RegistrarMovimientos";
 import { useRegistroControls } from "../../hooks/useRegistroControls.jsx.jsx";
 import { useMovimientosQueries } from "../../queries/useMovimientosQueries.jsx";
+import { SkeletonTabla } from "../moleculas/SkeletonTabla.jsx";
 import { SpinnerLoader } from "../moleculas/Spinner.jsx";
 
+// ─── Animations ───────────────────────────────────────────────
+const fadeUp = keyframes`
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+`;
+
+const slideIn = keyframes`
+  from { opacity: 0; transform: translateX(-12px); }
+  to   { opacity: 1; transform: translateX(0); }
+`;
+
+const shimmerLine = keyframes`
+  0%   { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+`;
+
+const cardPop = keyframes`
+  from { opacity: 0; transform: translateY(16px) scale(0.97); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+`;
+
+// ─── Component ────────────────────────────────────────────────
 export function MovimientosTemplate() {
-  // States
   const [value, setValue] = useState(dayjs(Date.now()));
   const [formatoFecha, setFormatoFecha] = useState("");
 
-  // Stores
   const {
     tipo,
     setTipo,
@@ -39,6 +57,7 @@ export function MovimientosTemplate() {
     bgCategoria,
     tituloBtnDesMovimientos,
   } = useOperaciones();
+
   const { id_usuario } = useUsuariosStore();
   const { mostrarCategorias } = useCategoriasStore();
   const {
@@ -50,7 +69,6 @@ export function MovimientosTemplate() {
   } = useMovimientosStore();
   const { mostrarCuentas } = useCuentaStore();
 
-  // Custom hook useRegistroControls
   const {
     cerrarDesplegables,
     state,
@@ -67,7 +85,6 @@ export function MovimientosTemplate() {
     openRegistro,
   } = useRegistroControls({ setTipo });
 
-  // Custom hook usemovimientosQueries
   const { movimientosQuery, cuentasQuery, categoriasQuery } =
     useMovimientosQueries({
       año,
@@ -84,10 +101,12 @@ export function MovimientosTemplate() {
     cuentasQuery.isLoading ||
     categoriasQuery.isLoading;
 
-  //if (isLoading) return <SpinnerLoader />;
-
   return (
     <Container onClick={cerrarDesplegables}>
+      {/* Ambient blobs */}
+      <BgBlob className="blob-one" />
+      <BgBlob className="blob-two" />
+
       {openRegistro && (
         <RegistrarMovimientos
           dataSelect={dataSelect}
@@ -96,181 +115,329 @@ export function MovimientosTemplate() {
           setState={() => setOpenRegistro(!openRegistro)}
         />
       )}
-      <header className="header">
-        <Header stateConfig={{ state: state, setState: openUser }} />
-      </header>
-      <section className="tipo">
-        <div className="filter-glass-card ">
-          <div
-            className="dropdown-container"
-            onClick={(e) => {
-              e.stopPropagation();
-            }}
-          >
-            <BtnDesplegable
-              textcolor={colorCategoria}
-              bgcolor={bgCategoria}
-              text={tituloBtnDesMovimientos}
-              funcion={openTipo}
-            />
 
-            {stateTipo && (
-              <ListaMenuDesplegable
-                data={DataDesplegableMovimientos}
-                top="112%"
-                funcion={(p) => cambiarTipo(p)}
+      {/* ── Header ── */}
+      <HeaderRow>
+        <Header stateConfig={{ state: state, setState: openUser }} />
+      </HeaderRow>
+
+      {/* ── Toolbar ── */}
+      <ToolbarRow>
+        <ToolbarGlass>
+          <ShimmerLine />
+          <ToolbarInner onClick={(e) => e.stopPropagation()}>
+            <DropdownWrap>
+              <BtnDesplegable
+                textcolor={colorCategoria}
+                bgcolor={bgCategoria}
+                text={tituloBtnDesMovimientos}
+                funcion={openTipo}
               />
-            )}
-          </div>
-          <div className="action-button">
+              {stateTipo && (
+                <ListaMenuDesplegable
+                  data={DataDesplegableMovimientos}
+                  top="112%"
+                  funcion={(p) => cambiarTipo(p)}
+                />
+              )}
+            </DropdownWrap>
+
+            <Divider />
+
             <BtnFiltro
               funcion={nuevoRegistro}
               bgcolor={bgCategoria}
               textcolor={colorCategoria}
               icono={<v.agregar />}
             />
-          </div>
-        </div>
-      </section>
+          </ToolbarInner>
+        </ToolbarGlass>
+      </ToolbarRow>
 
-      <section className="totales">
-        <CardTotales
-          total={totalMesAñoPendientes}
-          title={tipo == "g" ? "Gastos pendientes" : "Ingresos pendientes"}
-          color={colorCategoria}
-          icono={<v.flechaarribalarga />}
-        />
-        <CardTotales
-          total={totalMesAñoPagados}
-          title={tipo == "g" ? "Gastos pagados" : "Ingresos pagados"}
-          color={colorCategoria}
-          icono={<v.flechaabajolarga />}
-        />
-        <CardTotales
-          total={totalMesAño}
-          title="Total"
-          color={colorCategoria}
-          icono={<v.balance />}
-        />
-      </section>
+      {/* ── Totales ── */}
+      <TotalesGrid>
+        <TotalCard delay="0s" accent={colorCategoria}>
+          <TotalCardGlow color={colorCategoria} />
+          <CardTotales
+            total={totalMesAñoPendientes}
+            title={tipo === "g" ? "Gastos pendientes" : "Ingresos pendientes"}
+            color={colorCategoria}
+            icono={<v.flechaarribalarga />}
+          />
+        </TotalCard>
 
-      <section className="calendario">
+        <TotalCard delay="0.08s" accent={colorCategoria}>
+          <TotalCardGlow color={colorCategoria} />
+          <CardTotales
+            total={totalMesAñoPagados}
+            title={tipo === "g" ? "Gastos pagados" : "Ingresos pagados"}
+            color={colorCategoria}
+            icono={<v.flechaabajolarga />}
+          />
+        </TotalCard>
+
+        <TotalCard delay="0.16s" accent={colorCategoria} highlight>
+          <TotalCardGlow color={colorCategoria} strong />
+          <CardTotales
+            total={totalMesAño}
+            title="Total"
+            color={colorCategoria}
+            icono={<v.balance />}
+          />
+        </TotalCard>
+      </TotalesGrid>
+
+      {/* ── Calendario ── */}
+      <CalendarioSection>
         <CalendarioLineal
           value={value}
           setValue={setValue}
           formatoFecha={formatoFecha}
           setFormatoFecha={setFormatoFecha}
         />
-      </section>
-      <section className="main">
-        <ContentWrapper>
-          <div className="table-responsive">
-            <TablaMovimientos
-              data={datamovimientos}
-              setOpenRegistro={setOpenRegistro}
-              setDataSelect={setDataSelect}
-              setAccion={setAccion}
-            />
-          </div>
-        </ContentWrapper>
-      </section>
+      </CalendarioSection>
+
+      {/* ── Tabla ── */}
+      <MainSection>
+        <ContentCard>
+          <CardAccentBar color={bgCategoria} />
+          <TableWrap>
+            {isLoading ? (
+              <SkeletonTabla rows={7} cols={5} />
+            ) : (
+              <TablaMovimientos
+                data={datamovimientos}
+                setOpenRegistro={setOpenRegistro}
+                setDataSelect={setDataSelect}
+                setAccion={setAccion}
+              />
+            )}
+          </TableWrap>
+        </ContentCard>
+      </MainSection>
     </Container>
   );
 }
+
+// ─── Styled Components ────────────────────────────────────────
+
 const Container = styled.div`
   min-height: 100vh;
   width: 100%;
-  padding: 15px;
-  background: ${({ theme }) => theme.bgtotal};
-  color: ${({ theme }) => theme.text};
+  padding: 20px;
+  background: ${({ theme }) => theme.bgtotal || "#0a0a0f"};
+  color: ${({ theme }) => theme.text || "#f0f0f8"};
   display: grid;
-  gap: 25px;
+  grid-template-rows: auto auto auto auto 1fr;
+  gap: 20px;
   box-sizing: border-box;
   overflow: hidden;
+  position: relative;
+  font-family: 'Sora', 'DM Sans', sans-serif;
 
-  .header {
-    display: flex;
-    align-items: center;
-    z-index: 3;
+  .blob-one {
+    top: -180px;
+    left: -120px;
+    background: radial-gradient(circle, rgba(155, 109, 255, 0.14) 0%, transparent 70%);
   }
-  .tipo {
-    z-index: 2;
-
-    .filter-glass-card {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 12px 20px;
-      border-radius: 18px;
-      background: rgba(255, 255, 255, 0.03); /* Fondo translúcido */
-      backdrop-filter: blur(15px); /* Efecto cristal */
-      -webkit-backdrop-filter: blur(15px);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-    }
-    .dropdown-container {
-      position: relative;
-    }
-  }
-
-  .totales {
-    display: grid;
-    align-items: center;
-    grid-template-columns: 1fr;
-    gap: 10px;
-    font-weight: 700;
-
-    @media ${Device.tablet} {
-      grid-template-columns: repeat(3, 1fr);
-    }
-  }
-
-  .calendario {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-  .main {
-    width: 100%;
-    overflow-y: auto;
-
-    .glow-bar {
-      position: absolute;
-      bottom: 0;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 60%;
-      height: 2px;
-      background: ${({ bordercolor }) => bordercolor};
-      box-shadow: 0 0 12px ${({ bordercolor }) => bordercolor};
-      opacity: 0.8;
-    }
+  .blob-two {
+    bottom: -160px;
+    right: -80px;
+    background: radial-gradient(circle, rgba(56, 189, 248, 0.10) 0%, transparent 70%);
+    width: 420px;
+    height: 420px;
   }
 `;
 
-const ContentWrapper = styled.div`
-  background: rgba(255, 255, 255, 0.02);
-  border-radius: 28px;
-  padding: 25px;
-  border: 1px solid ${({ theme }) => theme.colorborder};
-  box-shadow: inset 0 0 30px ${({ theme }) => theme.shadowtable};
-  min-height: 400px;
+const BgBlob = styled.div`
+  position: absolute;
+  width: 500px;
+  height: 500px;
+  border-radius: 50%;
+  filter: blur(50px);
+  pointer-events: none;
+  z-index: 0;
+`;
+
+/* ── Header ── */
+
+const HeaderRow = styled.header`
+  display: flex;
+  align-items: center;
+  z-index: 200;
+  position: relative;
+  animation: ${slideIn} 0.5s ease both;
+`;
+
+/* ── Toolbar ── */
+
+const ToolbarRow = styled.section`
+  z-index: 100;
+  position: relative;
+  animation: ${fadeUp} 0.5s 0.05s ease both;
+`;
+
+const ToolbarGlass = styled.div`
+  position: relative;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  border-radius: 18px;
+  backdrop-filter: blur(16px);
+  overflow: visible;
+  padding: 4px 8px;
+`;
+
+const ShimmerLine = styled.div`
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  border-radius: 18px 18px 0 0;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(191, 148, 255, 0.6) 50%,
+    transparent 100%
+  );
+  animation: ${shimmerLine} 3s ease-in-out infinite;
+  pointer-events: none;
+`;
+
+const ToolbarInner = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 8px 10px;
+  flex-wrap: wrap;
+`;
+
+const DropdownWrap = styled.div`
+  position: relative;
+  flex: 1;
+  min-width: 160px;
+  z-index: 101;
+`;
+
+const Divider = styled.div`
+  width: 1px;
+  height: 32px;
+  background: rgba(255, 255, 255, 0.08);
+  flex-shrink: 0;
+`;
+
+/* ── Totales ── */
+
+const TotalesGrid = styled.section`
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 12px;
+  z-index: 1;
+  position: relative;
+  animation: ${fadeUp} 0.5s 0.1s ease both;
+
+  @media ${Device.tablet} {
+    grid-template-columns: repeat(3, 1fr);
+  }
+`;
+
+const TotalCard = styled.div`
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 16px 20px;
+  border-radius: 18px;
+  background: ${({ highlight }) =>
+    highlight ? "rgba(255,255,255,0.05)" : "rgba(255,255,255,0.025)"};
+  border: 1px solid ${({ highlight }) =>
+    highlight ? "rgba(255,255,255,0.1)" : "rgba(255,255,255,0.06)"};
+  backdrop-filter: blur(16px);
+  overflow: hidden;
+  animation: ${cardPop} 0.5s ${({ delay }) => delay || "0s"} ease both;
+  transition: transform 0.2s ease, border-color 0.2s ease;
+
+  &:hover {
+    transform: translateY(-2px);
+    border-color: rgba(255,255,255,0.14);
+  }
+`;
+
+const TotalCardGlow = styled.div`
+  position: absolute;
+  bottom: -30px;
+  right: -20px;
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  background: ${({ color }) => color || "#bf94ff"};
+  opacity: ${({ strong }) => (strong ? 0.12 : 0.06)};
+  filter: blur(30px);
+  pointer-events: none;
+`;
+
+/* ── Calendario ── */
+
+const CalendarioSection = styled.section`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1;
+  position: relative;
+  animation: ${fadeUp} 0.5s 0.15s ease both;
+`;
+
+/* ── Main ── */
+
+const MainSection = styled.section`
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  overflow-y: auto;
+  padding-bottom: 20px;
+  animation: ${fadeUp} 0.5s 0.2s ease both;
+
+  &::-webkit-scrollbar {
+    width: 4px;
+  }
+  &::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  &::-webkit-scrollbar-thumb {
+    background: rgba(191, 148, 255, 0.3);
+    border-radius: 99px;
+  }
+`;
+
+const ContentCard = styled.div`
+  position: relative;
+  background: rgba(255, 255, 255, 0.025);
+  border-radius: 24px;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  box-shadow:
+    0 0 0 1px rgba(255, 255, 255, 0.03),
+    0 24px 48px rgba(0, 0, 0, 0.25),
+    inset 0 1px 0 rgba(255, 255, 255, 0.06);
+  backdrop-filter: blur(20px);
+  min-height: 420px;
+  overflow: hidden;
   display: flex;
   flex-direction: column;
+`;
 
-  .table-responsive {
-    animation: fadeIn 0.6s ease-out;
-  }
+const CardAccentBar = styled.div`
+  height: 3px;
+  width: 100%;
+  background: ${({ color }) =>
+    color
+      ? `linear-gradient(90deg, ${color}, transparent)`
+      : "linear-gradient(90deg, #bf94ff, transparent)"};
+  opacity: 0.8;
+  flex-shrink: 0;
+`;
 
-  @keyframes fadeIn {
-    from {
-      opacity: 0;
-      transform: translateY(15px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
+const TableWrap = styled.div`
+  padding: 20px 24px;
+  flex: 1;
+  animation: ${fadeUp} 0.4s ease both;
 `;

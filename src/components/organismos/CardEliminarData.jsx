@@ -65,7 +65,8 @@ const Container = styled.div`
   justify-content: center;
   align-items: center;
   padding: 15px;
-  gap: 20px;
+  //gap: 20px;
+  padding-bottom: 20px;
 
   h2 {
     color: rgba(252, 69, 69, 0.72);
