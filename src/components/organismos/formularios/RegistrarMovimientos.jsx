@@ -199,7 +199,7 @@ const Container = styled.div`
   align-items: center;
   justify-content: center;
   position: fixed;
-  z-index: 100;
+  z-index: 1000;
 
   .sub-contenedor {
     width: 500px;

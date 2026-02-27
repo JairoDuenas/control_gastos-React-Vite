@@ -32,7 +32,9 @@ const orbitSpin = keyframes`
 // ─── Component ────────────────────────────────────────────────
 export function AcercaDeTemplate() {
   const { setTipo } = useOperaciones();
-  const { cerrarDesplegables, state, openUser } = useRegistroControls({ setTipo });
+  const { cerrarDesplegables, state, openUser } = useRegistroControls({
+    setTipo,
+  });
 
   const particlesInit = async (engine) => {
     await loadSlim(engine);
@@ -75,7 +77,6 @@ export function AcercaDeTemplate() {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6, ease: "easeOut" }}
       >
-
         {/* ── Hero ── */}
         <Hero>
           <AvatarWrap>
@@ -95,13 +96,14 @@ export function AcercaDeTemplate() {
         <Stats>
           {[
             { end: 100, suffix: "+", label: "Consultas Procesadas" },
-            { end: 12,  suffix: "",  label: "Módulos del Sistema" },
-            { end: 99,  suffix: "%", label: "Optimización UI" },
+            { end: 12, suffix: "", label: "Módulos del Sistema" },
+            { end: 99, suffix: "%", label: "Optimización UI" },
           ].map((s, i) => (
             <StatCard key={i} $delay={`${i * 0.1}s`}>
               <StatGlow />
               <StatNum>
-                <CountUp end={s.end} duration={2} />{s.suffix}
+                <CountUp end={s.end} duration={2} />
+                {s.suffix}
               </StatNum>
               <StatLabel>{s.label}</StatLabel>
             </StatCard>
@@ -113,12 +115,12 @@ export function AcercaDeTemplate() {
           <SectionTitle>Tecnologías Utilizadas</SectionTitle>
           <TechGrid>
             {[
-              { name: "React",             emoji: "⚛️" },
-              { name: "Zustand",           emoji: "🐻" },
-              { name: "React Query",       emoji: "🔄" },
+              { name: "React", emoji: "⚛️" },
+              { name: "Zustand", emoji: "🐻" },
+              { name: "React Query", emoji: "🔄" },
               { name: "Styled Components", emoji: "💅" },
-              { name: "Chart.js",          emoji: "📊" },
-              { name: "Framer Motion",     emoji: "🎞️" },
+              { name: "Chart.js", emoji: "📊" },
+              { name: "Framer Motion", emoji: "🎞️" },
             ].map((t, i) => (
               <TechCard key={i} $delay={`${i * 0.07}s`}>
                 <TechEmoji>{t.emoji}</TechEmoji>
@@ -133,10 +135,19 @@ export function AcercaDeTemplate() {
           <SectionTitle>Timeline del Proyecto</SectionTitle>
           <Timeline>
             {[
-              { fase: "Inicio",        desc: "Diseño base y arquitectura inicial." },
-              { fase: "Optimización",  desc: "Integración React Query y mejoras de rendimiento." },
-              { fase: "Visualización", desc: "Implementación de gráficas dinámicas." },
-              { fase: "Actualidad",    desc: "Dashboard premium con animaciones modernas." },
+              { fase: "Inicio", desc: "Diseño base y arquitectura inicial." },
+              {
+                fase: "Optimización",
+                desc: "Integración React Query y mejoras de rendimiento.",
+              },
+              {
+                fase: "Visualización",
+                desc: "Implementación de gráficas dinámicas.",
+              },
+              {
+                fase: "Actualidad",
+                desc: "Dashboard premium con animaciones modernas.",
+              },
             ].map((item, i) => (
               <TimelineItem key={i} $delay={`${i * 0.1}s`}>
                 <TimelineDot />
@@ -148,7 +159,6 @@ export function AcercaDeTemplate() {
             ))}
           </Timeline>
         </Section>
-
       </Content>
     </Container>
   );
@@ -169,17 +179,25 @@ const Container = styled.div`
   color: ${({ theme }) => theme.text || "#f0f0f8"};
   box-sizing: border-box;
   overflow-x: hidden;
-  font-family: 'Sora', 'DM Sans', sans-serif;
+  font-family: "Sora", "DM Sans", sans-serif;
 
   .blob-one {
     top: -180px;
     left: -120px;
-    background: radial-gradient(circle, rgba(26, 107, 69, 0.18) 0%, transparent 70%);
+    background: radial-gradient(
+      circle,
+      rgba(26, 107, 69, 0.18) 0%,
+      transparent 70%
+    );
   }
   .blob-two {
     bottom: -160px;
     right: -80px;
-    background: radial-gradient(circle, rgba(42, 157, 111, 0.12) 0%, transparent 70%);
+    background: radial-gradient(
+      circle,
+      rgba(42, 157, 111, 0.12) 0%,
+      transparent 70%
+    );
     width: 420px;
     height: 420px;
   }
@@ -189,7 +207,11 @@ const Container = styled.div`
     transform: translateX(-50%);
     width: 300px;
     height: 300px;
-    background: radial-gradient(circle, rgba(26, 107, 69, 0.07) 0%, transparent 70%);
+    background: radial-gradient(
+      circle,
+      rgba(26, 107, 69, 0.07) 0%,
+      transparent 70%
+    );
   }
 
   @media (max-width: 480px) {
@@ -343,7 +365,9 @@ const StatCard = styled.div`
   backdrop-filter: blur(16px);
   overflow: hidden;
   animation: ${fadeUp} 0.5s ${({ $delay }) => $delay || "0s"} ease both;
-  transition: transform 0.25s ease, border-color 0.25s ease;
+  transition:
+    transform 0.25s ease,
+    border-color 0.25s ease;
 
   &:hover {
     transform: translateY(-5px);
@@ -403,7 +427,7 @@ const SectionTitle = styled.h2`
   text-align: center;
 
   &::after {
-    content: '';
+    content: "";
     display: block;
     width: 40px;
     height: 2px;
@@ -432,7 +456,10 @@ const TechCard = styled.div`
   border: 1px solid rgba(255, 255, 255, 0.05);
   cursor: default;
   animation: ${fadeUp} 0.4s ${({ $delay }) => $delay || "0s"} ease both;
-  transition: transform 0.2s ease, border-color 0.2s ease, background 0.2s ease;
+  transition:
+    transform 0.2s ease,
+    border-color 0.2s ease,
+    background 0.2s ease;
 
   &:hover {
     transform: translateY(-4px);

@@ -18,14 +18,14 @@ export function CardTotales({ color, total, title, icono }) {
       </section>
       <section className="contentIcon">
         <BtnCircular
-          height="50px"
-          width="50px"
+          height="40px"
+          width="40px"
           bgcolor={color}
           fontsize="25px"
           icono={icono}
           textcolor="#ffffff"
-          translatex="-45px"
-          translatey="-15px"
+          translatex="-30px"
+          translatey="-10px"
         />
       </section>
       <div className="glow-bar" />
@@ -34,14 +34,11 @@ export function CardTotales({ color, total, title, icono }) {
 }
 const Container = styled.div`
   position: relative;
-  //background: rgba(255, 255, 255, 0.03);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
   display: flex;
   align-items: center;
   background: ${({ theme }) => theme.bg};
   border-radius: 25px;
-  padding: 20px;
+  padding: 16px;
   width: 100%;
   box-sizing: border-box;
   overflow: hidden;
