@@ -1,4 +1,4 @@
-import styled, { keyframes } from "styled-components";
+import styled from "styled-components";
 import { Header } from "../organismos/Header";
 import { useRegistroControls } from "../../hooks/useRegistroControls.jsx";
 import { useOperaciones } from "../../store/OperacionesStore.jsx";
@@ -8,26 +8,23 @@ import { motion } from "framer-motion";
 import CountUp from "react-countup";
 import imgFoto from "../../assets/foto.png";
 
+// ─── Shared components ────────────────────────────────────────
+import { BgBlobs } from "../atomos/BgBlobs";
+import { PageContainer } from "../atomos/PageContainer";
+import {
+  HeaderRow,
+  Hero,
+  Avatar,
+  AvatarWrap,
+  OrbitDot,
+  Stats,
+  StatCard,
+  Section,
+  TechCard,
+  TimelineItem,
+} from "../moleculas/ToolbarGlass";
+
 // ─── Animations ───────────────────────────────────────────────
-const fadeUp = keyframes`
-  from { opacity: 0; transform: translateY(24px); }
-  to   { opacity: 1; transform: translateY(0); }
-`;
-
-const slideIn = keyframes`
-  from { opacity: 0; transform: translateX(-12px); }
-  to   { opacity: 1; transform: translateX(0); }
-`;
-
-const avatarGlow = keyframes`
-  0%, 100% { box-shadow: 0 0 0 0 rgba(26, 107, 69, 0.5); }
-  50%       { box-shadow: 0 0 0 14px rgba(26, 107, 69, 0); }
-`;
-
-const orbitSpin = keyframes`
-  from { transform: rotate(0deg) translateX(70px) rotate(0deg); }
-  to   { transform: rotate(360deg) translateX(70px) rotate(-360deg); }
-`;
 
 // ─── Component ────────────────────────────────────────────────
 export function AcercaDeTemplate() {
@@ -41,11 +38,9 @@ export function AcercaDeTemplate() {
   };
 
   return (
-    <Container onClick={cerrarDesplegables}>
+    <PageContainer onClick={cerrarDesplegables}>
       {/* Ambient blobs */}
-      <BgBlob className="blob-one" />
-      <BgBlob className="blob-two" />
-      <BgBlob className="blob-three" />
+      <BgBlobs />
 
       {/* Partículas */}
       <ParticlesWrapper>
@@ -160,90 +155,17 @@ export function AcercaDeTemplate() {
           </Timeline>
         </Section>
       </Content>
-    </Container>
+    </PageContainer>
   );
 }
 
 // ─── Styled Components ────────────────────────────────────────
-
-const Container = styled.div`
-  position: relative;
-  min-height: 100vh;
-  width: 100%;
-  padding: 20px;
-  padding-bottom: 60px;
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-  background: ${({ theme }) => theme.bgtotal || "#0a0a0f"};
-  color: ${({ theme }) => theme.text || "#f0f0f8"};
-  box-sizing: border-box;
-  overflow-x: hidden;
-  font-family: "Sora", "DM Sans", sans-serif;
-
-  .blob-one {
-    top: -180px;
-    left: -120px;
-    background: radial-gradient(
-      circle,
-      rgba(26, 107, 69, 0.18) 0%,
-      transparent 70%
-    );
-  }
-  .blob-two {
-    bottom: -160px;
-    right: -80px;
-    background: radial-gradient(
-      circle,
-      rgba(42, 157, 111, 0.12) 0%,
-      transparent 70%
-    );
-    width: 420px;
-    height: 420px;
-  }
-  .blob-three {
-    top: 40%;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 300px;
-    height: 300px;
-    background: radial-gradient(
-      circle,
-      rgba(26, 107, 69, 0.07) 0%,
-      transparent 70%
-    );
-  }
-
-  @media (max-width: 480px) {
-    padding: 14px;
-    padding-bottom: 40px;
-  }
-`;
-
-const BgBlob = styled.div`
-  position: absolute;
-  width: 500px;
-  height: 500px;
-  border-radius: 50%;
-  filter: blur(50px);
-  pointer-events: none;
-  z-index: 0;
-`;
 
 const ParticlesWrapper = styled.div`
   position: absolute;
   inset: 0;
   z-index: 0;
   pointer-events: none;
-`;
-
-/* ── Header ── */
-
-const HeaderRow = styled.div`
-  position: relative;
-  z-index: 200;
-  width: 100%;
-  animation: ${slideIn} 0.5s ease both;
 `;
 
 /* ── Content ── */
@@ -260,57 +182,6 @@ const Content = styled.div`
 `;
 
 /* ── Hero ── */
-
-const Hero = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
-  gap: 12px;
-  padding: 48px 24px 40px;
-  background: rgba(255, 255, 255, 0.025);
-  border-radius: 24px;
-  border: 1px solid rgba(255, 255, 255, 0.06);
-  backdrop-filter: blur(20px);
-  box-shadow:
-    0 0 0 1px rgba(255, 255, 255, 0.03),
-    0 24px 48px rgba(0, 0, 0, 0.2);
-  animation: ${fadeUp} 0.6s ease both;
-
-  @media (max-width: 480px) {
-    padding: 32px 16px 28px;
-  }
-`;
-
-const AvatarWrap = styled.div`
-  position: relative;
-  width: 120px;
-  height: 120px;
-  margin-bottom: 4px;
-`;
-
-const Avatar = styled.img`
-  width: 100%;
-  height: 100%;
-  border-radius: 50%;
-  object-fit: cover;
-  border: 3px solid rgba(26, 107, 69, 0.7);
-  padding: 3px;
-  animation: ${avatarGlow} 3s ease-in-out infinite;
-`;
-
-const OrbitDot = styled.div`
-  position: absolute;
-  top: 0;
-  left: 50%;
-  width: 10px;
-  height: 10px;
-  background: #2a9d6f;
-  border-radius: 50%;
-  box-shadow: 0 0 10px #2a9d6f;
-  animation: ${orbitSpin} 3.5s linear infinite;
-  transform-origin: center 60px;
-`;
 
 const HeroName = styled.h1`
   font-size: clamp(1.8rem, 5vw, 2.8rem);
@@ -341,40 +212,6 @@ const HeroDesc = styled.p`
   color: ${({ theme }) => theme.colorSubtitle || "#8888aa"};
 `;
 
-/* ── Stats ── */
-
-const Stats = styled.div`
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 16px;
-  animation: ${fadeUp} 0.6s 0.1s ease both;
-
-  @media (max-width: 560px) {
-    grid-template-columns: 1fr;
-    gap: 12px;
-  }
-`;
-
-const StatCard = styled.div`
-  position: relative;
-  text-align: center;
-  padding: 28px 16px;
-  border-radius: 20px;
-  background: rgba(255, 255, 255, 0.025);
-  border: 1px solid rgba(255, 255, 255, 0.06);
-  backdrop-filter: blur(16px);
-  overflow: hidden;
-  animation: ${fadeUp} 0.5s ${({ $delay }) => $delay || "0s"} ease both;
-  transition:
-    transform 0.25s ease,
-    border-color 0.25s ease;
-
-  &:hover {
-    transform: translateY(-5px);
-    border-color: rgba(26, 107, 69, 0.25);
-  }
-`;
-
 const StatGlow = styled.div`
   position: absolute;
   bottom: -20px;
@@ -401,21 +238,6 @@ const StatLabel = styled.span`
   font-weight: 500;
   text-transform: uppercase;
   letter-spacing: 0.08em;
-`;
-
-/* ── Section ── */
-
-const Section = styled.div`
-  background: rgba(255, 255, 255, 0.025);
-  border-radius: 24px;
-  border: 1px solid rgba(255, 255, 255, 0.06);
-  backdrop-filter: blur(20px);
-  padding: 28px;
-  animation: ${fadeUp} 0.5s ${({ $delay }) => $delay || "0s"} ease both;
-
-  @media (max-width: 480px) {
-    padding: 20px 16px;
-  }
 `;
 
 const SectionTitle = styled.h2`
@@ -445,29 +267,6 @@ const TechGrid = styled.div`
   gap: 12px;
 `;
 
-const TechCard = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 8px;
-  padding: 18px 12px;
-  border-radius: 14px;
-  background: rgba(255, 255, 255, 0.03);
-  border: 1px solid rgba(255, 255, 255, 0.05);
-  cursor: default;
-  animation: ${fadeUp} 0.4s ${({ $delay }) => $delay || "0s"} ease both;
-  transition:
-    transform 0.2s ease,
-    border-color 0.2s ease,
-    background 0.2s ease;
-
-  &:hover {
-    transform: translateY(-4px);
-    border-color: rgba(26, 107, 69, 0.3);
-    background: rgba(26, 107, 69, 0.06);
-  }
-`;
-
 const TechEmoji = styled.span`
   font-size: 1.6rem;
   line-height: 1;
@@ -489,16 +288,6 @@ const Timeline = styled.div`
   border-left: 2px solid rgba(26, 107, 69, 0.3);
   padding-left: 28px;
   margin-left: 8px;
-`;
-
-const TimelineItem = styled.div`
-  position: relative;
-  padding-bottom: 28px;
-  animation: ${fadeUp} 0.4s ${({ $delay }) => $delay || "0s"} ease both;
-
-  &:last-child {
-    padding-bottom: 0;
-  }
 `;
 
 const TimelineDot = styled.div`

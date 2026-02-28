@@ -1,5 +1,11 @@
 import styled from "styled-components";
-import { fadeUp, shimmerLine, slideIn } from "../../styles/animations";
+import {
+  fadeUp,
+  shimmerLine,
+  slideIn,
+  avatarGlow,
+  orbitSpin,
+} from "../../styles/animations";
 
 /**
  * ToolbarRow
@@ -138,4 +144,137 @@ export const ChartWrap = styled.div`
   align-items: center;
   justify-content: center;
   animation: ${fadeUp} 0.4s ease both;
+`;
+
+/**
+ * Para AcercadeTemplate
+ *
+ */
+export const Hero = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 12px;
+  padding: 48px 24px 40px;
+  background: rgba(255, 255, 255, 0.025);
+  border-radius: 24px;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  backdrop-filter: blur(20px);
+  box-shadow:
+    0 0 0 1px rgba(255, 255, 255, 0.03),
+    0 24px 48px rgba(0, 0, 0, 0.2);
+  animation: ${fadeUp} 0.6s ease both;
+
+  @media (max-width: 480px) {
+    padding: 32px 16px 28px;
+  }
+`;
+
+export const AvatarWrap = styled.div`
+  position: relative;
+  width: 120px;
+  height: 120px;
+  margin-bottom: 4px;
+`;
+
+export const Avatar = styled.img`
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid rgba(26, 107, 69, 0.7);
+  padding: 3px;
+  animation: ${avatarGlow} 3s ease-in-out infinite;
+`;
+
+export const OrbitDot = styled.div`
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: 10px;
+  height: 10px;
+  background: #2a9d6f;
+  border-radius: 50%;
+  box-shadow: 0 0 10px #2a9d6f;
+  animation: ${orbitSpin} 3.5s linear infinite;
+  transform-origin: center 60px;
+`;
+
+export const Stats = styled.div`
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  animation: ${fadeUp} 0.6s 0.1s ease both;
+
+  @media (max-width: 560px) {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+`;
+
+export const StatCard = styled.div`
+  position: relative;
+  text-align: center;
+  padding: 28px 16px;
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.025);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  backdrop-filter: blur(16px);
+  overflow: hidden;
+  animation: ${fadeUp} 0.5s ${({ $delay }) => $delay || "0s"} ease both;
+  transition:
+    transform 0.25s ease,
+    border-color 0.25s ease;
+
+  &:hover {
+    transform: translateY(-5px);
+    border-color: rgba(26, 107, 69, 0.25);
+  }
+`;
+
+export const Section = styled.div`
+  background: rgba(255, 255, 255, 0.025);
+  border-radius: 24px;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  backdrop-filter: blur(20px);
+  padding: 28px;
+  animation: ${fadeUp} 0.5s ${({ $delay }) => $delay || "0s"} ease both;
+
+  @media (max-width: 480px) {
+    padding: 20px 16px;
+  }
+`;
+
+export const TechCard = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  padding: 18px 12px;
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  cursor: default;
+  animation: ${fadeUp} 0.4s ${({ $delay }) => $delay || "0s"} ease both;
+  transition:
+    transform 0.2s ease,
+    border-color 0.2s ease,
+    background 0.2s ease;
+
+  &:hover {
+    transform: translateY(-4px);
+    border-color: rgba(26, 107, 69, 0.3);
+    background: rgba(26, 107, 69, 0.06);
+  }
+`;
+
+export const TimelineItem = styled.div`
+  position: relative;
+  padding-bottom: 28px;
+  animation: ${fadeUp} 0.4s ${({ $delay }) => $delay || "0s"} ease both;
+
+  &:last-child {
+    padding-bottom: 0;
+  }
 `;
