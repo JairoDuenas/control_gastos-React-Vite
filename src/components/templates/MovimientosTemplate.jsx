@@ -34,15 +34,11 @@ import {
   ToolbarInner,
   DropdownWrap,
   ToolbarDivider,
+  CalendarioSection,
 } from "../moleculas/ToolbarGlass";
-import { fadeUp } from "../../styles/animations.jsx";
 
 // ─── Animations ───────────────────────────────────────────────
-
-const cardPop = keyframes`
-  from { opacity: 0; transform: translateY(16px) scale(0.97); }
-  to   { opacity: 1; transform: translateY(0) scale(1); }
-`;
+import { fadeUp, cardPop } from "../../styles/animations.jsx";
 
 // ─── Component ────────────────────────────────────────────────
 export function MovimientosTemplate() {
@@ -271,17 +267,6 @@ const TotalCardGlow = styled.div`
   opacity: ${({ strong }) => (strong ? 0.12 : 0.06)};
   filter: blur(30px);
   pointer-events: none;
-`;
-
-/* ── Calendario ── */
-
-const CalendarioSection = styled.section`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 1;
-  position: relative;
-  animation: ${fadeUp} 0.5s 0.15s ease both;
 `;
 
 const TableWrap = styled.div`

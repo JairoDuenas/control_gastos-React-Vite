@@ -125,7 +125,6 @@ const Container = styled.div`
     height: 100%;
     display: flex;
     justify-content: center;
-    border: 1px solid ${({ theme }) => theme.bg5};
     font-size: 1rem;
   }
 `;

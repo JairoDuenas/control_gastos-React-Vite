@@ -1,19 +1,5 @@
-import styled, { keyframes } from "styled-components";
-
-const fadeUp = keyframes`
-  from { opacity: 0; transform: translateY(20px); }
-  to   { opacity: 1; transform: translateY(0); }
-`;
-
-const shimmerLine = keyframes`
-  0%   { transform: translateX(-100%); }
-  100% { transform: translateX(100%); }
-`;
-
-const slideIn = keyframes`
-  from { opacity: 0; transform: translateX(-12px); }
-  to   { opacity: 1; transform: translateX(0); }
-`;
+import styled from "styled-components";
+import { fadeUp, shimmerLine, slideIn } from "../../styles/animations";
 
 /**
  * ToolbarRow
@@ -120,4 +106,36 @@ export const PageTitle = styled.h2`
   margin: 0;
   letter-spacing: -0.01em;
   opacity: 0.85;
+`;
+
+/**
+ * Calendario
+ * Calendario dentro del toolbar.
+ */
+export const CalendarioSection = styled.section`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1;
+  position: relative;
+  animation: ${fadeUp} 0.5s 0.1s ease both;
+`;
+
+/**
+ * Para tabs
+ * Tabs dentro del toolbar.
+ */
+export const TabsWrap = styled.div`
+  padding: 20px 24px;
+  flex: 1;
+  animation: ${fadeUp} 0.4s ease both;
+`;
+
+export const ChartWrap = styled.div`
+  padding: 24px;
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: ${fadeUp} 0.4s ease both;
 `;

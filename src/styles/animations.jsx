@@ -9,7 +9,6 @@ import { keyframes } from "styled-components";
 //   import { fadeUp, slideIn } from "../../styles/animations";
 // ─────────────────────────────────────────────────────────────
 
-
 // ── Entradas ─────────────────────────────────────────────────
 
 /** Entrada desde abajo con fade. Usado en la mayoría de templates. */
@@ -42,7 +41,6 @@ export const fadeRowIn = keyframes`
   to   { opacity: 1; transform: translateX(0); }
 `;
 
-
 // ── Loops continuos ──────────────────────────────────────────
 
 /** Flotación vertical suave. Usado en CarouselFrame y logo Login. */
@@ -69,7 +67,6 @@ export const orbitSpin = keyframes`
   to   { transform: rotate(360deg) translateX(70px) rotate(-360deg); }
 `;
 
-
 // ── Pulsos y brillos ─────────────────────────────────────────
 
 /** Pulso de sombra morada. Usado en avatar del HomeTemplate. */
@@ -89,7 +86,6 @@ export const pulseRing = keyframes`
   0%   { transform: scale(1);   opacity: 0.6; }
   100% { transform: scale(1.6); opacity: 0; }
 `;
-
 
 // ── Shimmer / loading ─────────────────────────────────────────
 
@@ -118,7 +114,6 @@ export const shimmerMove = keyframes`
   0%   { background-position: -600px 0; }
   100% { background-position:  600px 0; }
 `;
-
 
 // ── Skeleton específico ───────────────────────────────────────
 

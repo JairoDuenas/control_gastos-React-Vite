@@ -17,6 +17,8 @@ export const MainSection = styled.section`
   width: 100%;
   overflow-y: auto;
   padding-bottom: 20px;
+  border-radius: 24px;
+
   animation: ${fadeUp} 0.5s 0.2s ease both;
 
   &::-webkit-scrollbar {
