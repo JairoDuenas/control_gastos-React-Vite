@@ -2,6 +2,9 @@ import styled from "styled-components";
 import {
   fadeUp,
   shimmerLine,
+  shimmer,
+  pulse,
+  float,
   slideIn,
   avatarGlow,
   orbitSpin,
@@ -188,19 +191,6 @@ export const Avatar = styled.img`
   animation: ${avatarGlow} 3s ease-in-out infinite;
 `;
 
-export const OrbitDot = styled.div`
-  position: absolute;
-  top: 0;
-  left: 50%;
-  width: 10px;
-  height: 10px;
-  background: #2a9d6f;
-  border-radius: 50%;
-  box-shadow: 0 0 10px #2a9d6f;
-  animation: ${orbitSpin} 3.5s linear infinite;
-  transform-origin: center 60px;
-`;
-
 export const Stats = styled.div`
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -311,4 +301,161 @@ export const SettingsCard = styled.div`
   flex-direction: column;
   gap: 0;
   animation: ${fadeUp} 0.5s ${({ $delay }) => $delay || "0s"} ease both;
+`;
+
+/**
+ * Para ConfiguracionTemplate
+ *
+ */
+
+/* ── Content ── */
+
+export const ContentText = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 1.6rem;
+  animation: ${fadeUp} 0.7s ease both;
+`;
+
+export const Title = styled.h1`
+  font-size: clamp(2.4rem, 5.5vw, 4rem);
+  font-weight: 800;
+  line-height: 1.08;
+  color: ${({ theme }) => theme.text || "#f0f0f8"};
+  margin: 0;
+  letter-spacing: -0.02em;
+  animation: ${fadeUp} 0.7s 0.1s ease both;
+`;
+
+export const GradientSpan = styled.span`
+  display: block;
+  background: linear-gradient(135deg, #bf94ff 0%, #38bdf8 50%, #ffd700 100%);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: ${shimmer} 4s linear infinite;
+`;
+
+export const SubText = styled.p`
+  font-size: 1.05rem;
+  color: ${({ theme }) => theme.colorSubtitle || "#8888aa"};
+  max-width: 500px;
+  line-height: 1.7;
+  margin: 0;
+  animation: ${fadeUp} 0.7s 0.2s ease both;
+
+  @media (max-width: 1024px) {
+    margin: 0 auto;
+  }
+`;
+
+/* ── Author ── */
+
+export const AuthorCard = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  width: fit-content;
+  padding: 12px 18px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  border-radius: 16px;
+  backdrop-filter: blur(12px);
+  animation: ${fadeUp} 0.7s 0.3s ease both;
+
+  @media (max-width: 1024px) {
+    margin: 0 auto;
+  }
+`;
+
+export const AvatarRing = styled.div`
+  position: relative;
+  width: 52px;
+  height: 52px;
+  flex-shrink: 0;
+
+  img {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid rgba(191, 148, 255, 0.6);
+    padding: 2px;
+    animation: ${pulse} 2.5s ease-in-out infinite;
+  }
+`;
+
+export const OrbitDot = styled.div`
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: 8px;
+  height: 8px;
+  background: #38bdf8;
+  border-radius: 50%;
+  box-shadow: 0 0 8px #38bdf8;
+  animation: ${orbitSpin} 3s linear infinite;
+  transform-origin: center 26px;
+`;
+
+/* ── Actions ── */
+
+export const Actions = styled.div`
+  display: flex;
+  gap: 14px;
+  flex-wrap: wrap;
+  animation: ${fadeUp} 0.7s 0.4s ease both;
+
+  @media (max-width: 1024px) {
+    justify-content: center;
+  }
+`;
+
+export const StatsRow = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  padding: 18px 24px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 16px;
+  width: fit-content;
+  backdrop-filter: blur(12px);
+  animation: ${fadeUp} 0.7s 0.5s ease both;
+
+  @media (max-width: 1024px) {
+    margin: 0 auto;
+  }
+`;
+
+/* ── Carousel ── */
+
+export const BoxImage = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  animation: ${fadeUp} 0.7s 0.15s ease both;
+
+  @media (max-width: 1024px) {
+    grid-row: 1;
+  }
+`;
+
+export const CarouselFrame = styled.div`
+  position: relative;
+  width: 100%;
+  max-width: 480px;
+  padding: 24px;
+  border-radius: 28px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  backdrop-filter: blur(20px);
+  animation: ${float} 6s ease-in-out infinite;
+
+  @media (max-width: 1024px) {
+    max-width: 300px;
+    padding: 16px;
+  }
 `;

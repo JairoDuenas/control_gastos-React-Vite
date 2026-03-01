@@ -1,4 +1,4 @@
-import styled, { keyframes } from "styled-components";
+import styled from "styled-components";
 import { Carrusel } from "../moleculas/Carrusel";
 import logojd from "../../assets/favicon.png";
 import { BtnSave } from "../moleculas/BtnSave";
@@ -9,36 +9,39 @@ import "swiper/css/navigation";
 import "swiper/css/pagination";
 import "swiper/css/scrollbar";
 
+// ─── Shared components ────────────────────────────────────────
+import { BgBlobs } from "../atomos/BgBlobs";
+import { PageContainer } from "../atomos/PageContainer";
+import { ContentCard, CardAccentBar } from "../atomos/ContentCard";
+import { MainSection } from "../atomos/MainSection";
+import {
+  HeaderRow,
+  ToolbarRow,
+  ToolbarGlass,
+  ShimmerLine,
+  ToolbarInner,
+  DropdownWrap,
+  ToolbarDivider,
+  CalendarioSection,
+  ContentText,
+  Title,
+  SubText,
+  AuthorCard,
+  AvatarRing,
+  OrbitDot,
+  Actions,
+  StatsRow,
+  GradientSpan,
+  BoxImage,
+  CarouselFrame,
+} from "../moleculas/ToolbarGlass";
+
 // ─── Animations ───────────────────────────────────────────────
-const fadeUp = keyframes`
-  from { opacity: 0; transform: translateY(28px); }
-  to   { opacity: 1; transform: translateY(0); }
-`;
-
-const float = keyframes`
-  0%, 100% { transform: translateY(0px) rotate(0deg); }
-  50%       { transform: translateY(-18px) rotate(2deg); }
-`;
-
-const shimmer = keyframes`
-  0%   { background-position: -400px 0; }
-  100% { background-position: 400px 0; }
-`;
-
-const orbitSpin = keyframes`
-  from { transform: rotate(0deg) translateX(140px) rotate(0deg); }
-  to   { transform: rotate(360deg) translateX(140px) rotate(-360deg); }
-`;
-
-const pulse = keyframes`
-  0%, 100% { box-shadow: 0 0 0 0 rgba(191, 148, 255, 0.4); }
-  50%       { box-shadow: 0 0 0 14px rgba(191, 148, 255, 0); }
-`;
 
 // ─── Component ────────────────────────────────────────────────
 export function HomeTemplate() {
   return (
-    <Main>
+    <PageContainer>
       {/* Noise grain overlay */}
       <Grain />
 
@@ -124,25 +127,11 @@ export function HomeTemplate() {
           </BoxImage>
         </HeroSection>
       </Container>
-    </Main>
+    </PageContainer>
   );
 }
 
 // ─── Styled Components ────────────────────────────────────────
-
-const Main = styled.div`
-  min-height: 100vh;
-  width: 100%;
-  padding: 20px;
-  background: ${({ theme }) => theme.bgtotal || "#0a0a0f"};
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  position: relative;
-  box-sizing: border-box;
-  overflow: hidden;
-  font-family: "Sora", "DM Sans", sans-serif;
-`;
 
 /* ── Background layers ── */
 
@@ -251,15 +240,6 @@ const HeroSection = styled.div`
   }
 `;
 
-/* ── Content ── */
-
-const ContentText = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 1.6rem;
-  animation: ${fadeUp} 0.7s ease both;
-`;
-
 const EyebrowTag = styled.span`
   display: inline-flex;
   align-items: center;
@@ -281,88 +261,6 @@ const EyebrowTag = styled.span`
   }
 `;
 
-const Title = styled.h1`
-  font-size: clamp(2.4rem, 5.5vw, 4rem);
-  font-weight: 800;
-  line-height: 1.08;
-  color: ${({ theme }) => theme.text || "#f0f0f8"};
-  margin: 0;
-  letter-spacing: -0.02em;
-  animation: ${fadeUp} 0.7s 0.1s ease both;
-`;
-
-const GradientSpan = styled.span`
-  display: block;
-  background: linear-gradient(135deg, #bf94ff 0%, #38bdf8 50%, #ffd700 100%);
-  background-size: 200% auto;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  animation: ${shimmer} 4s linear infinite;
-`;
-
-const SubText = styled.p`
-  font-size: 1.05rem;
-  color: ${({ theme }) => theme.colorSubtitle || "#8888aa"};
-  max-width: 500px;
-  line-height: 1.7;
-  margin: 0;
-  animation: ${fadeUp} 0.7s 0.2s ease both;
-
-  @media (max-width: 1024px) {
-    margin: 0 auto;
-  }
-`;
-
-/* ── Author ── */
-
-const AuthorCard = styled.div`
-  display: flex;
-  align-items: center;
-  gap: 16px;
-  width: fit-content;
-  padding: 12px 18px;
-  background: rgba(255, 255, 255, 0.03);
-  border: 1px solid rgba(255, 255, 255, 0.07);
-  border-radius: 16px;
-  backdrop-filter: blur(12px);
-  animation: ${fadeUp} 0.7s 0.3s ease both;
-
-  @media (max-width: 1024px) {
-    margin: 0 auto;
-  }
-`;
-
-const AvatarRing = styled.div`
-  position: relative;
-  width: 52px;
-  height: 52px;
-  flex-shrink: 0;
-
-  img {
-    width: 100%;
-    height: 100%;
-    border-radius: 50%;
-    object-fit: cover;
-    border: 2px solid rgba(191, 148, 255, 0.6);
-    padding: 2px;
-    animation: ${pulse} 2.5s ease-in-out infinite;
-  }
-`;
-
-const OrbitDot = styled.div`
-  position: absolute;
-  top: 0;
-  left: 50%;
-  width: 8px;
-  height: 8px;
-  background: #38bdf8;
-  border-radius: 50%;
-  box-shadow: 0 0 8px #38bdf8;
-  animation: ${orbitSpin} 3s linear infinite;
-  transform-origin: center 26px;
-`;
-
 const AuthorInfo = styled.div`
   display: flex;
   flex-direction: column;
@@ -382,37 +280,7 @@ const AuthorQuote = styled.span`
   font-style: italic;
 `;
 
-/* ── Actions ── */
-
-const Actions = styled.div`
-  display: flex;
-  gap: 14px;
-  flex-wrap: wrap;
-  animation: ${fadeUp} 0.7s 0.4s ease both;
-
-  @media (max-width: 1024px) {
-    justify-content: center;
-  }
-`;
-
 /* ── Stats ── */
-
-const StatsRow = styled.div`
-  display: flex;
-  align-items: center;
-  gap: 24px;
-  padding: 18px 24px;
-  background: rgba(255, 255, 255, 0.03);
-  border: 1px solid rgba(255, 255, 255, 0.06);
-  border-radius: 16px;
-  width: fit-content;
-  backdrop-filter: blur(12px);
-  animation: ${fadeUp} 0.7s 0.5s ease both;
-
-  @media (max-width: 1024px) {
-    margin: 0 auto;
-  }
-`;
 
 const Stat = styled.div`
   display: flex;
@@ -439,37 +307,6 @@ const StatDivider = styled.div`
   width: 1px;
   height: 32px;
   background: rgba(255, 255, 255, 0.08);
-`;
-
-/* ── Carousel ── */
-
-const BoxImage = styled.div`
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  animation: ${fadeUp} 0.7s 0.15s ease both;
-
-  @media (max-width: 1024px) {
-    grid-row: 1;
-  }
-`;
-
-const CarouselFrame = styled.div`
-  position: relative;
-  width: 100%;
-  max-width: 480px;
-  padding: 24px;
-  border-radius: 28px;
-  background: rgba(255, 255, 255, 0.03);
-  border: 1px solid rgba(255, 255, 255, 0.07);
-  backdrop-filter: blur(20px);
-  animation: ${float} 6s ease-in-out infinite;
-
-  @media (max-width: 1024px) {
-    max-width: 300px;
-    padding: 16px;
-  }
 `;
 
 const FrameGlow = styled.div`
