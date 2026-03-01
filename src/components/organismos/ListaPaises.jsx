@@ -20,7 +20,6 @@ export function ListaPaises({ setSelect, setState }) {
     });
     setDataresult(filtrado);
   }
-  console.log(isocodigos);
   return (
     <Container>
       <header className="header">

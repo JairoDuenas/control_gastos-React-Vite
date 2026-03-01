@@ -278,3 +278,37 @@ export const TimelineItem = styled.div`
     padding-bottom: 0;
   }
 `;
+
+/**
+ * Para ConfiguracionTemplate
+ *
+ */
+/* ── Title ── */
+
+export const TitleRow = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  animation: ${fadeUp} 0.5s ease both;
+`;
+
+/* ── Settings card ── */
+
+export const SettingsCard = styled.div`
+  position: relative;
+  z-index: auto;
+  background: rgba(255, 255, 255, 0.025);
+  border-radius: 20px;
+  border: 1px solid
+    ${({ $danger }) =>
+      $danger ? "rgba(255, 80, 80, 0.15)" : "rgba(255, 255, 255, 0.06)"};
+  box-shadow:
+    0 0 0 1px rgba(255, 255, 255, 0.03),
+    0 16px 40px rgba(0, 0, 0, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  overflow: visible;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  animation: ${fadeUp} 0.5s ${({ $delay }) => $delay || "0s"} ease both;
+`;

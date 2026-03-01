@@ -1,4 +1,4 @@
-import styled, { keyframes } from "styled-components";
+import styled from "styled-components";
 import { Header } from "../organismos/Header";
 import { useState } from "react";
 import { Selector } from "../organismos/Selector";
@@ -8,18 +8,13 @@ import { useUsuariosStore } from "../../store/UsuariosStore";
 import { BtnSave } from "../moleculas/BtnSave";
 import { CardEliminarData } from "../organismos/CardEliminarData";
 
+// ─── Shared components ────────────────────────────────────────
+import { BgBlobs } from "../atomos/BgBlobs";
+import { PageContainer } from "../atomos/PageContainer";
+import { CardAccentBar } from "../atomos/ContentCard";
+import { HeaderRow, TitleRow, SettingsCard } from "../moleculas/ToolbarGlass";
+
 // ─── Animations ───────────────────────────────────────────────
-const fadeUp = keyframes`
-  from { opacity: 0; transform: translateY(20px); }
-  to   { opacity: 1; transform: translateY(0); }
-`;
-
-const slideIn = keyframes`
-  from { opacity: 0; transform: translateX(-12px); }
-  to   { opacity: 1; transform: translateX(0); }
-`;
-
-
 
 // ─── Component ────────────────────────────────────────────────
 export function ConfiguracionTemplate() {
@@ -41,10 +36,9 @@ export function ConfiguracionTemplate() {
   };
 
   return (
-    <Container>
+    <PageContainer>
       {/* Ambient blobs */}
-      <BgBlob className="blob-one" />
-      <BgBlob className="blob-two" />
+      <BgBlobs />
 
       {/* ── Header ── */}
       <HeaderRow>
@@ -55,7 +49,6 @@ export function ConfiguracionTemplate() {
 
       {/* ── Content ── */}
       <ContentArea>
-
         {/* Page title */}
         <TitleRow>
           <TitleIcon>⚙️</TitleIcon>
@@ -66,7 +59,7 @@ export function ConfiguracionTemplate() {
         </TitleRow>
 
         {/* Moneda card */}
-        <SettingsCard delay="0.1s">
+        <SettingsCard $delay="0.1s">
           <CardAccentBar />
           <CardHeader>
             <CardIcon>💱</CardIcon>
@@ -102,8 +95,7 @@ export function ConfiguracionTemplate() {
         </SettingsCard>
 
         {/* Zona peligrosa */}
-        <SettingsCard delay="0.2s" danger>
-          <CardAccentBar danger />
+        <SettingsCard $delay="0.2s" $danger>
           <CardHeader>
             <CardIcon>🗑️</CardIcon>
             <CardInfo>
@@ -113,105 +105,28 @@ export function ConfiguracionTemplate() {
           </CardHeader>
           <CardEliminarData />
         </SettingsCard>
-
       </ContentArea>
-    </Container>
+    </PageContainer>
   );
 }
 
 // ─── Styled Components ────────────────────────────────────────
 
-const Container = styled.div`
-  min-height: 100vh;
-  width: 100%;
-  padding: 20px;
-  background: ${({ theme }) => theme.bgtotal || "#0a0a0f"};
-  color: ${({ theme }) => theme.text || "#f0f0f8"};
-  display: grid;
-  grid-template-rows: auto 1fr;
-  gap: 20px;
-  box-sizing: border-box;
-  overflow: hidden;
-  position: relative;
-  font-family: 'Sora', 'DM Sans', sans-serif;
-
-  @media (max-width: 480px) {
-    padding: 14px;
-    gap: 14px;
-  }
-
-  .blob-one {
-    top: -180px;
-    left: -120px;
-    background: radial-gradient(circle, rgba(155, 109, 255, 0.14) 0%, transparent 70%);
-  }
-  .blob-two {
-    bottom: -160px;
-    right: -80px;
-    background: radial-gradient(circle, rgba(56, 189, 248, 0.10) 0%, transparent 70%);
-    width: 420px;
-    height: 420px;
-  }
-`;
-
-const BgBlob = styled.div`
-  position: absolute;
-  width: 500px;
-  height: 500px;
-  border-radius: 50%;
-  filter: blur(50px);
-  pointer-events: none;
-  z-index: 0;
-`;
-
-/* ── Header ── */
-
-const HeaderRow = styled.header`
-  display: flex;
-  align-items: center;
-  z-index: 200;
-  position: relative;
-  animation: ${slideIn} 0.5s ease both;
-`;
-
 /* ── Content area ── */
 
 const ContentArea = styled.section`
-  position: relative;
-  z-index: 1;
   width: 100%;
   max-width: 640px;
   margin: 0 auto;
   display: flex;
   flex-direction: column;
-  gap: 20px;
-  overflow-y: auto;
+  gap: 40px;
   padding-bottom: 40px;
 
   @media (max-width: 480px) {
     gap: 14px;
     padding-bottom: 24px;
   }
-
-  &::-webkit-scrollbar {
-    width: 4px;
-  }
-  &::-webkit-scrollbar-track {
-    background: transparent;
-  }
-  &::-webkit-scrollbar-thumb {
-    background: rgba(191, 148, 255, 0.3);
-    border-radius: 99px;
-  }
-`;
-
-/* ── Title ── */
-
-const TitleRow = styled.div`
-  display: flex;
-  align-items: center;
-  gap: 14px;
-  animation: ${fadeUp} 0.5s ease both;
 `;
 
 const TitleIcon = styled.span`
@@ -237,38 +152,6 @@ const PageSubtitle = styled.p`
   color: ${({ theme }) => theme.colorSubtitle || "#8888aa"};
 `;
 
-/* ── Settings card ── */
-
-const SettingsCard = styled.div`
-  position: relative;
-  z-index: ${({ danger }) => (danger ? 1 : 2)};
-  background: rgba(255, 255, 255, 0.025);
-  border-radius: 20px;
-  border: 1px solid ${({ danger }) =>
-    danger ? "rgba(255, 80, 80, 0.15)" : "rgba(255, 255, 255, 0.06)"};
-  box-shadow:
-    0 0 0 1px rgba(255, 255, 255, 0.03),
-    0 16px 40px rgba(0, 0, 0, 0.2),
-    inset 0 1px 0 rgba(255, 255, 255, 0.05);
-  backdrop-filter: blur(20px);
-  overflow: visible;
-  display: flex;
-  flex-direction: column;
-  gap: 0;
-  animation: ${fadeUp} 0.5s ${({ delay }) => delay || "0s"} ease both;
-`;
-
-const CardAccentBar = styled.div`
-  height: 3px;
-  width: 100%;
-  background: ${({ danger }) =>
-    danger
-      ? "linear-gradient(90deg, rgba(255,80,80,0.7), transparent)"
-      : "linear-gradient(90deg, #bf94ff, transparent)"};
-  opacity: 0.9;
-  flex-shrink: 0;
-`;
-
 const CardHeader = styled.div`
   display: flex;
   align-items: center;
@@ -291,7 +174,7 @@ const CardIcon = styled.span`
 const CardInfo = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 2px;
+  gap: 4px;
 `;
 
 const CardLabel = styled.span`
@@ -309,7 +192,6 @@ const CardHint = styled.span`
 
 const SelectorRow = styled.div`
   position: relative;
-  z-index: 100;
   padding: 18px 20px 12px;
 
   @media (max-width: 480px) {
@@ -321,10 +203,9 @@ const SelectorRow = styled.div`
 
 const SaveRow = styled.div`
   display: flex;
-  justify-content: flex-end;
+  justify-content: center;
   padding: 12px 20px 20px;
-  position: relative;
-  z-index: 1;
+  margin-top: 20px;
 
   @media (max-width: 480px) {
     padding: 10px 14px 16px;
