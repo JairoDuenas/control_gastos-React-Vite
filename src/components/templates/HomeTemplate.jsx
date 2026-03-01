@@ -45,7 +45,7 @@ export function HomeTemplate() {
       {/* Decorative grid lines */}
       <GridLines>
         {[...Array(6)].map((_, i) => (
-          <GridLine key={i} index={i} />
+          <GridLine key={i} $index={i} />
         ))}
       </GridLines>
 

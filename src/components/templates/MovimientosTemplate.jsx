@@ -1,4 +1,4 @@
-import styled, { keyframes } from "styled-components";
+import styled from "styled-components";
 import { useState } from "react";
 import { Header } from "../organismos/Header";
 import { CalendarioLineal } from "../organismos/CalendarioLineal";
@@ -151,8 +151,8 @@ export function MovimientosTemplate() {
 
       {/* ── Totales ── */}
       <TotalesGrid>
-        <TotalCard delay="0s" accent={colorCategoria}>
-          <TotalCardGlow color={colorCategoria} />
+        <TotalCard $delay="0s" $accent={colorCategoria}>
+          <TotalCardGlow $color={colorCategoria} />
           <CardTotales
             total={totalMesAñoPendientes}
             title={tipo === "g" ? "Gastos pendientes" : "Ingresos pendientes"}
@@ -161,8 +161,8 @@ export function MovimientosTemplate() {
           />
         </TotalCard>
 
-        <TotalCard delay="0.08s" accent={colorCategoria}>
-          <TotalCardGlow color={colorCategoria} />
+        <TotalCard $delay="0.08s" $accent={colorCategoria}>
+          <TotalCardGlow $color={colorCategoria} />
           <CardTotales
             total={totalMesAñoPagados}
             title={tipo === "g" ? "Gastos pagados" : "Ingresos pagados"}
@@ -171,8 +171,8 @@ export function MovimientosTemplate() {
           />
         </TotalCard>
 
-        <TotalCard delay="0.16s" accent={colorCategoria} highlight>
-          <TotalCardGlow color={colorCategoria} strong />
+        <TotalCard $delay="0.16s" $accent={colorCategoria} $highlight>
+          <TotalCardGlow $color={colorCategoria} $strong />
           <CardTotales
             total={totalMesAño}
             title="Total"
@@ -195,7 +195,7 @@ export function MovimientosTemplate() {
       {/* ── Tabla ── */}
       <MainSection>
         <ContentCard>
-          <CardAccentBar color={bgCategoria} />
+          <CardAccentBar $color={bgCategoria} />
           <TableWrap>
             {isLoading ? (
               <SkeletonTabla rows={7} cols={5} />

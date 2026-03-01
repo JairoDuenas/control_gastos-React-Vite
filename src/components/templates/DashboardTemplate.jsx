@@ -1,4 +1,3 @@
-import styled from "styled-components";
 import { Header } from "../organismos/Header";
 import { useState } from "react";
 import { BtnDesplegable } from "../moleculas/BtnDesplegable";
@@ -120,7 +119,7 @@ export function DashboardTemplate() {
       {/* ── Gráfica Radar ── */}
       <MainSection>
         <ContentCard>
-          <CardAccentBar color={bgCategoria} />
+          <CardAccentBar $color={bgCategoria} />
           <ChartWrap>
             {isLoading ? (
               <SkeletonGrafica bars={8} height="300px" />

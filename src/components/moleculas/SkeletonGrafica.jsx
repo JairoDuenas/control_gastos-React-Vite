@@ -19,14 +19,14 @@ export function SkeletonGrafica({ bars = 7, height = "220px" }) {
       <TopRow>
         <TitleBlock />
         <Controls>
-          <PillBlock width="60px" />
-          <PillBlock width="60px" delay="0.1s" />
-          <PillBlock width="60px" delay="0.2s" />
+          <PillBlock $width="60px" />
+          <PillBlock $width="60px" $delay="0.1s" />
+          <PillBlock $width="60px" $delay="0.2s" />
         </Controls>
       </TopRow>
 
       {/* Área principal de la gráfica */}
-      <ChartArea height={height}>
+      <ChartArea $height={height}>
         {/* Líneas de cuadrícula horizontales */}
         <GridLines>
           {[0, 1, 2, 3].map((i) => (
@@ -39,10 +39,10 @@ export function SkeletonGrafica({ bars = 7, height = "220px" }) {
           {Array.from({ length: bars }).map((_, i) => (
             <BarWrap key={i}>
               <Bar
-                heightPercent={barHeights[i % barHeights.length]}
-                delay={`${i * 0.07}s`}
+                $heightPercent={barHeights[i % barHeights.length]}
+                $delay={`${i * 0.07}s`}
               />
-              <BarLabel delay={`${i * 0.07}s`} />
+              <BarLabel $delay={`${i * 0.07}s`} />
             </BarWrap>
           ))}
         </BarsRow>
@@ -54,9 +54,9 @@ export function SkeletonGrafica({ bars = 7, height = "220px" }) {
       {/* Leyenda simulada */}
       <Legend>
         {[0, 1, 2].map((i) => (
-          <LegendItem key={i} delay={`${i * 0.08}s`}>
+          <LegendItem key={i} $delay={`${i * 0.08}s`}>
             <LegendDot />
-            <LegendText width={`${50 + i * 20}px`} />
+            <LegendText $widthwidth={`${50 + i * 20}px`} />
           </LegendItem>
         ))}
       </Legend>
@@ -87,9 +87,9 @@ const fadeIn = keyframes`
 const skeletonShimmer = css`
   background: linear-gradient(
     90deg,
-    ${({ theme }) => theme.skeletonBase   || "rgba(0,0,0,0.06)"} 25%,
-    ${({ theme }) => theme.skeletonShine  || "rgba(0,0,0,0.12)"} 50%,
-    ${({ theme }) => theme.skeletonBase   || "rgba(0,0,0,0.06)"} 75%
+    ${({ theme }) => theme.skeletonBase || "rgba(0,0,0,0.06)"} 25%,
+    ${({ theme }) => theme.skeletonShine || "rgba(0,0,0,0.12)"} 50%,
+    ${({ theme }) => theme.skeletonBase || "rgba(0,0,0,0.06)"} 75%
   );
   background-size: 600px 100%;
   animation: ${shimmer} 1.6s ease-in-out infinite;

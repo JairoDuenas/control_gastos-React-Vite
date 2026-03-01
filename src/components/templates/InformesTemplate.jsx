@@ -96,7 +96,7 @@ export function InformesTemplate() {
       {/* ── Tabs / Contenido ── */}
       <MainSection>
         <ContentCard>
-          <CardAccentBar color={bgCategoria} />
+          <CardAccentBar $color={bgCategoria} />
           <TabsWrap>
             <Tabs />
           </TabsWrap>
