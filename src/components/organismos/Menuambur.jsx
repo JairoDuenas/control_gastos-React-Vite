@@ -119,7 +119,7 @@ const Menu = styled.div`
     right: 0;
     bottom: 0;
     width: 100vw;
-    z-index: 10;
+    //z-index: 10;
     background-color: ${(props) => `rgba(${props.theme.bodyRgba},0.85)`};
     backdrop-filter: blur(3px);
     transform: ${(props) =>

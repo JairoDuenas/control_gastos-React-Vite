@@ -25,6 +25,7 @@ export const ContentCard = styled.div`
   overflow: hidden;
   display: flex;
   flex-direction: column;
+  z-index: 1;
 `;
 
 /**

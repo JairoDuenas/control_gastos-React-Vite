@@ -121,7 +121,6 @@ export function ToggleTema() {
 }
 const Container = styled.div`
   display: flex;
-  //justify-content: center;
   .toggle {
     width: 46px;
     height: 65px;
@@ -131,8 +130,6 @@ const Container = styled.div`
     cursor: pointer;
 
     line-height: 1;
-
-    //margin-top: 15px;
   }
 
   .input {

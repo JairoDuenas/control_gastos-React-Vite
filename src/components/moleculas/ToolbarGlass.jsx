@@ -5,7 +5,6 @@ import {
   shimmer,
   pulse,
   float,
-  slideIn,
   avatarGlow,
   orbitSpin,
 } from "../../styles/animations";
@@ -15,9 +14,8 @@ import {
  * Fila contenedora del toolbar con z-index y animación de entrada.
  */
 export const ToolbarRow = styled.div`
-  z-index: 300;
+  z-index: 2;
   position: relative;
-  animation: ${fadeUp} 0.5s 0.05s ease both;
 `;
 
 /**
@@ -28,9 +26,8 @@ export const ToolbarRow = styled.div`
 export const HeaderRow = styled.header`
   display: flex;
   align-items: center;
-  z-index: 999;
+  z-index: 3;
   position: relative;
-  animation: ${slideIn} 0.5s ease both;
 `;
 
 /**
@@ -90,7 +87,6 @@ export const DropdownWrap = styled.div`
   position: relative;
   flex: 1;
   min-width: 160px;
-  z-index: 101;
 `;
 
 /**
@@ -127,7 +123,6 @@ export const CalendarioSection = styled.section`
   justify-content: center;
   z-index: 1;
   position: relative;
-  animation: ${fadeUp} 0.5s 0.1s ease both;
 `;
 
 /**
@@ -279,7 +274,6 @@ export const TitleRow = styled.div`
   display: flex;
   align-items: center;
   gap: 14px;
-  animation: ${fadeUp} 0.5s ease both;
 `;
 
 /* ── Settings card ── */
@@ -300,7 +294,6 @@ export const SettingsCard = styled.div`
   display: flex;
   flex-direction: column;
   gap: 0;
-  animation: ${fadeUp} 0.5s ${({ $delay }) => $delay || "0s"} ease both;
 `;
 
 /**
