@@ -119,6 +119,7 @@ const Menu = styled.div`
     right: 0;
     bottom: 0;
     width: 100vw;
+    height: 100vh;
     //z-index: 10;
     background-color: ${(props) => `rgba(${props.theme.bodyRgba},0.85)`};
     backdrop-filter: blur(3px);
@@ -139,7 +140,7 @@ const Menu = styled.div`
       align-items: center;
       text-decoration: none;
       color: ${(props) => props.theme.text};
-      height: 100px;
+      height: 70px;
       .LinkIcon {
         padding: ${v.smSpacing} ${v.mdSpacing};
         display: flex;
