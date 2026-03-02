@@ -1,19 +1,12 @@
-import styled, { keyframes } from "styled-components";
+import styled from "styled-components";
 import { v } from "../../../styles/variables";
 import { LinksArray, SecondarylinksArray } from "../../../utils/dataEstatica";
 import { SidebarCard } from "../sidebar/SidebarCard";
 import { NavLink } from "react-router-dom";
 import { ToggleTema } from "../ToggleTema";
 
-const fadeIn = keyframes`
-  from { opacity: 0; transform: translateX(-6px); }
-  to   { opacity: 1; transform: translateX(0); }
-`;
-
-const float = keyframes`
-  0%, 100% { transform: translateY(0); }
-  50%       { transform: translateY(4px); }
-`;
+// ─── Animations ───────────────────────────────────────────────
+import { fadeIn, float } from "../../../styles/animations";
 
 export function Sidebar({ state, setState }) {
   return (
