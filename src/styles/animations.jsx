@@ -46,7 +46,7 @@ export const fadeRowIn = keyframes`
 /** Flotación vertical suave. Usado en CarouselFrame y logo Login. */
 export const float = keyframes`
   0%, 100% { transform: translateY(0px) rotate(0deg); }
-  50%       { transform: translateY(-18px) rotate(2deg); }
+  50%       { transform: translateY(-6px) rotate(2deg); }
 `;
 
 /** Flotación vertical simple sin rotación. Usado en EmptyState Lottie. */

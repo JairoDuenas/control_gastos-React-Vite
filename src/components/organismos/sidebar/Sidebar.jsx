@@ -113,7 +113,7 @@ const Container = styled.div`
     align-items: center;
     gap: 8px;
     /* padding fijo sin depender de scale */
-    padding: 4px 0 20px;
+    padding: 10px 0 25px;
     overflow: hidden;
 
     .imgcontent {
