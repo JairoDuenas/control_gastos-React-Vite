@@ -13,6 +13,8 @@ import { BgBlobs } from "../atomos/BgBlobs";
 import { PageContainer } from "../atomos/PageContainer";
 import { CardAccentBar } from "../atomos/ContentCard";
 import { HeaderRow, TitleRow, SettingsCard } from "../moleculas/ToolbarGlass";
+import { useRegistroControls } from "../../hooks/useRegistroControls.jsx";
+import { useOperaciones } from "../../store/OperacionesStore";
 
 // ─── Animations ───────────────────────────────────────────────
 
@@ -20,7 +22,7 @@ import { HeaderRow, TitleRow, SettingsCard } from "../moleculas/ToolbarGlass";
 export function ConfiguracionTemplate() {
   const { datausuarios, editarMonedaUser } = useUsuariosStore();
   const [select, setSelect] = useState([]);
-  const [state, setState] = useState(false);
+  //const [state, setState] = useState(false);
   const [stateListaPaises, setStateListaPaises] = useState(false);
 
   const moneda = select.symbol ? select.symbol : datausuarios.moneda;
@@ -35,16 +37,19 @@ export function ConfiguracionTemplate() {
     });
   };
 
+  const { setTipo } = useOperaciones();
+  const { cerrarDesplegables, state, openUser } = useRegistroControls({
+    setTipo,
+  });
+
   return (
-    <PageContainer>
+    <PageContainer onClick={cerrarDesplegables}>
       {/* Ambient blobs */}
       <BgBlobs />
 
       {/* ── Header ── */}
       <HeaderRow>
-        <Header
-          stateConfig={{ state: state, setState: () => setState(!state) }}
-        />
+        <Header stateConfig={{ state: state, setState: openUser }} />
       </HeaderRow>
 
       {/* ── Content ── */}

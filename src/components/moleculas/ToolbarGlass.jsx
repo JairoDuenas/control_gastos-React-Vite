@@ -438,7 +438,7 @@ export const BoxImage = styled.div`
 
 export const CarouselFrame = styled.div`
   position: relative;
-  width: 100%;
+  //width: 100%;
   max-width: 480px;
   padding: 24px;
   border-radius: 28px;
