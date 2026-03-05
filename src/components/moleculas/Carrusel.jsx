@@ -9,13 +9,13 @@ import {
   Autoplay,
 } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
-import img1 from "../../assets/Ruleta/ruleta1.png";
-import img2 from "../../assets/Ruleta/ruleta2.png";
-import img3 from "../../assets/Ruleta/ruleta3.png";
-import img4 from "../../assets/Ruleta/ruleta4.png";
-import img5 from "../../assets/Ruleta/ruleta5.png";
-import img6 from "../../assets/Ruleta/ruleta6.png";
-import img7 from "../../assets/Ruleta/ruleta6.png";
+import img1 from "../../assets/Ruleta/ruleta1.webp";
+import img2 from "../../assets/Ruleta/ruleta2.webp";
+import img3 from "../../assets/Ruleta/ruleta3.webp";
+import img4 from "../../assets/Ruleta/ruleta4.webp";
+import img5 from "../../assets/Ruleta/ruleta5.webp";
+import img6 from "../../assets/Ruleta/ruleta6.webp";
+import img7 from "../../assets/Ruleta/ruleta6.webp";
 
 import "swiper/css/effect-cards";
 

@@ -9,6 +9,12 @@ export default defineConfig({
       output: {
         manualChunks: {
           lottie: ["lottie-react", "lottie-web"],
+          mui: ["@mui/material", "@emotion/react", "@emotion/styled"],
+          charts: ["chart.js", "react-chartjs-2"],
+          motion: ["framer-motion"],
+          supabase: ["@supabase/supabase-js"],
+          query: ["@tanstack/react-query"],
+          swiper: ["swiper"],
         },
       },
     },
