@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import styled from "styled-components";
 import { v } from "../../../styles/variables";
 import { InputText } from "./InputText";
-import { SpinnerLoader } from "../../moleculas/Spinner";
+//import { SpinnerLoader } from "../../moleculas/Spinner";
 import { useOperaciones } from "../../../store/OperacionesStore";
 import { BtnSave } from "../../moleculas/BtnSave";
 import { useCategoriasStore } from "../../../store/CategoriasStore";
@@ -86,7 +86,7 @@ export function RegistrarCategorias({ onClose, dataSelect, accion }) {
 
   return (
     <Container>
-      {estadoProceso && <SpinnerLoader />}
+      {estadoProceso}
 
       <div className="sub-contenedor">
         <div className="headers">
